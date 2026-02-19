@@ -7,6 +7,7 @@ import {
   buildAutoReplyEmail,
 } from "@/lib/email/templates";
 import { SITE_CONFIG } from "@/lib/constants";
+import { logger } from "@/lib/logger";
 
 const SENDER = "Nudel <noreply@noodle-creative.com>";
 
@@ -41,6 +42,10 @@ export const contactRouter = router({
       ]);
 
       if (adminResult.error || replyResult.error) {
+        logger.error(
+          { admin: adminResult.error, autoReply: replyResult.error },
+          "メール送信失敗",
+        );
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "メールの送信に失敗しました。しばらく経ってから再度お試しください。",

@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nudel LLC - Corporate Website
 
-## Getting Started
+**ご縁を力に、価値を形に。**
 
-First, run the development server:
+[Nudel LLC](https://nudel.co.jp) のコーポレートサイトのソースコードです。
+
+## 技術スタック
+
+| カテゴリ | 技術 |
+| --- | --- |
+| フレームワーク | [Next.js](https://nextjs.org/) 16 (App Router) |
+| 言語 | [TypeScript](https://www.typescriptlang.org/) 5 |
+| UI | [React](https://react.dev/) 19, [Radix UI](https://www.radix-ui.com/), [Tailwind CSS](https://tailwindcss.com/) 4 |
+| アニメーション | [Motion](https://motion.dev/) |
+| API | [tRPC](https://trpc.io/) 11, [TanStack Query](https://tanstack.com/query) |
+| バリデーション | [Zod](https://zod.dev/) |
+| テスト | [Vitest](https://vitest.dev/), [Testing Library](https://testing-library.com/) |
+| Lint | [Biome](https://biomejs.dev/) |
+| デプロイ | [Cloudflare Workers](https://workers.cloudflare.com/) ([OpenNext](https://opennext.js.org/cloudflare)) |
+| CI/CD | [GitHub Actions](https://github.com/features/actions) |
+
+## 必要要件
+
+- Node.js >= 22
+- npm
+
+## セットアップ
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# リポジトリをクローン
+git clone https://github.com/Nudel-LLC/website.git
+cd website
+
+# 依存関係をインストール
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 開発
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# 開発サーバーを起動（Turbopack 使用）
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+http://localhost:3000 でサイトが表示されます。
 
-## Learn More
+## スクリプト一覧
 
-To learn more about Next.js, take a look at the following resources:
+| コマンド | 説明 |
+| --- | --- |
+| `npm run dev` | 開発サーバー起動 |
+| `npm run build` | 本番ビルド |
+| `npm run start` | 本番サーバー起動 |
+| `npm run lint` | Biome によるリント |
+| `npm run lint:fix` | リントの自動修正 |
+| `npm run typecheck` | TypeScript 型チェック |
+| `npm run test` | テスト実行 |
+| `npm run test:watch` | テスト監視モード |
+| `npm run test:coverage` | テスト + カバレッジ |
+| `npm run preview` | Cloudflare プレビュー |
+| `npm run deploy` | Cloudflare へデプロイ |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## プロジェクト構成
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── api/trpc/           # tRPC API エンドポイント
+│   ├── layout.tsx          # ルートレイアウト
+│   ├── page.tsx            # トップページ
+│   └── globals.css
+├── components/
+│   ├── layout/             # Navbar, Footer
+│   ├── sections/           # ページセクション（Hero, Services 等）
+│   ├── providers/          # tRPC Provider
+│   └── ui/                 # 共通 UI コンポーネント（shadcn/ui）
+├── hooks/                  # カスタムフック
+├── lib/
+│   ├── trpc/               # tRPC クライアント設定
+│   ├── constants.ts        # 定数定義
+│   ├── utils.ts            # ユーティリティ関数
+│   └── fonts.ts            # フォント設定
+└── server/
+    └── trpc/               # tRPC サーバー / ルーター
+        └── routers/        # API ルーター（contact 等）
+```
 
-## Deploy on Vercel
+## CI/CD
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+GitHub Actions により、プッシュ・PR 時に以下が自動実行されます。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Lint** - Biome によるコード検証
+2. **Type Check** - TypeScript 型チェック
+3. **Test** - Vitest によるテスト + カバレッジ
+4. **Build** - Next.js ビルド
+5. **Deploy** - Cloudflare Workers へデプロイ（`main` ブランチのみ）
+
+## デプロイ
+
+本番環境は [Cloudflare Workers](https://workers.cloudflare.com/) にデプロイされます。
+
+```bash
+# プレビュー環境で確認
+npm run preview
+
+# 本番デプロイ
+npm run deploy
+```
+
+デプロイには以下の環境変数（Cloudflare）が必要です。
+
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`

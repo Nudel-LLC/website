@@ -46,7 +46,7 @@
     }
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.2",
+    "@biomejs/biome": "^2.4.4",
     "@opennextjs/cloudflare": "^1.16.5",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.9.1",
@@ -64,6 +64,6 @@
     "typescript": "^5",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.0.18",
-    "wrangler": "^4.66.0"
+    "wrangler": "^4.67.0"
   }
 }

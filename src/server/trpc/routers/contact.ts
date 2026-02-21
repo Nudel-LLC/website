@@ -9,7 +9,7 @@ import {
 import { SITE_CONFIG } from "@/lib/constants";
 import { logger } from "@/lib/logger";
 
-const SENDER = "Nudel <noreply@noodle-creative.com>";
+const SENDER = "Nudel <noreply@nudel.co.jp>";
 
 const contactInputSchema = z.object({
   name: z.string().min(1, "お名前を入力してください"),

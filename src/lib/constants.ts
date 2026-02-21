@@ -72,5 +72,5 @@ export const SITE_CONFIG = {
   description:
     "ご縁を力に、価値を形に。企画から実行までを一気通貫で行うクリエイティブカンパニー。動画制作、ライティング、MC・ナレーション、Web・SNS運用を提供します。",
   url: "https://nudel-llc.com",
-  email: "info@noodle-creative.com",
+  email: "info@nudel.co.jp",
 } as const;

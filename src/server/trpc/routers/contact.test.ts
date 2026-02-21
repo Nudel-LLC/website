@@ -49,11 +49,11 @@ describe("contact.submit", () => {
     });
 
     const adminCall = mockSend.mock.calls.find(
-      (call: unknown[]) => (call[0] as { to: string }).to === "info@noodle-creative.com",
+      (call: unknown[]) => (call[0] as { to: string }).to === "info@nudel.co.jp",
     );
     expect(adminCall).toBeDefined();
     expect(adminCall![0]).toMatchObject({
-      to: "info@noodle-creative.com",
+      to: "info@nudel.co.jp",
       replyTo: "test@example.com",
     });
   });

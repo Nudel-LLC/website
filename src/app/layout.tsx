@@ -31,7 +31,7 @@ const jsonLd = {
   description:
     "企画から実行までを一気通貫で行うクリエイティブカンパニー。",
   url: "https://nudel-llc.com",
-  email: "info@noodle-creative.com",
+  email: "info@nudel.co.jp",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Tokyo",

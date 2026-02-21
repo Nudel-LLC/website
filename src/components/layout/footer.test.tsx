@@ -12,7 +12,7 @@ describe("Footer", () => {
 
   it("メールアドレスが表示される", () => {
     render(<Footer />);
-    expect(screen.getByText("info@noodle-creative.com")).toBeInTheDocument();
+    expect(screen.getByText("info@nudel.co.jp")).toBeInTheDocument();
   });
 
   it("コピーライトが表示される", () => {

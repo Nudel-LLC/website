@@ -14,6 +14,7 @@
 | アニメーション | [Motion](https://motion.dev/) |
 | API | [tRPC](https://trpc.io/) 11, [TanStack Query](https://tanstack.com/query) |
 | バリデーション | [Zod](https://zod.dev/) |
+| CMS | [microCMS](https://microcms.io/) |
 | ユニットテスト | [Vitest](https://vitest.dev/), [Testing Library](https://testing-library.com/) |
 | E2E テスト | [Playwright](https://playwright.dev/) |
 | Lint | [Biome](https://biomejs.dev/) |
@@ -47,6 +48,10 @@ RESEND_API_KEY=re_xxxxxxxx
 
 # メール送信先（ローカルでは Resend のテストアドレスを使用）
 CONTACT_EMAIL_TO=delivered@resend.dev
+
+# microCMS（サービス・実績コンテンツの取得に必要）
+MICROCMS_SERVICE_DOMAIN=your-service-domain
+MICROCMS_API_KEY=your-api-key
 ```
 
 > **Note**: `CLOUDFLARE_API_TOKEN` と `CLOUDFLARE_ACCOUNT_ID` はデプロイ時のみ必要です。GitHub Secrets に設定されています。
@@ -105,6 +110,7 @@ http://localhost:3000 でサイトが表示されます。
 src/
 ├── app/                    # Next.js App Router
 │   ├── api/trpc/           # tRPC API エンドポイント
+│   ├── services/[slug]/    # サービス詳細ページ
 │   ├── layout.tsx          # ルートレイアウト
 │   ├── page.tsx            # トップページ
 │   └── globals.css
@@ -114,6 +120,7 @@ src/
 │   ├── providers/          # tRPC Provider
 │   └── ui/                 # 共通 UI コンポーネント（shadcn/ui）
 ├── lib/
+│   ├── microcms/           # microCMS クライアント、型定義
 │   ├── trpc/               # tRPC クライアント設定
 │   ├── email/              # Resend クライアント、メールテンプレート
 │   ├── constants.ts        # 定数定義

@@ -42,6 +42,23 @@ git push origin 1.0.0
 - **alpha**: `custom_domain: true` により初回デプロイ時に `alpha.nudel.co.jp` のDNSが自動設定される（Cloudflare管理ドメインが前提）
 - **prod**: 既存の Cloudflare ダッシュボード設定をそのまま使用
 
+### 環境変数
+
+`wrangler.jsonc` の `vars` に定義する公開変数:
+
+| 変数名 | 説明 |
+|--------|------|
+| `CONTACT_EMAIL_TO` | お問い合わせメール送信先 |
+| `SITE_URL` | サイト URL |
+| `MICROCMS_SERVICE_DOMAIN` | microCMS サービスドメイン |
+
+Cloudflare Secret として設定するシークレット変数（`wrangler secret put` で設定）:
+
+| 変数名 | 説明 |
+|--------|------|
+| `RESEND_API_KEY` | Resend メール送信 API キー |
+| `MICROCMS_API_KEY` | microCMS API キー |
+
 ## GitHub Environments
 
 リポジトリの Settings > Environments で以下を設定する:

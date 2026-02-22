@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Nudel LLC のコーポレートサイト。Next.js 16 (App Router) + Cloudflare Workers で構築されたシングルページアプリケーション。
+Nudel LLC のコーポレートサイト。Next.js 16 (App Router) + Cloudflare Workers で構築。microCMS でコンテンツ管理。
 
 - **Prod**: https://nudel.co.jp
 - **Alpha**: https://alpha.nudel.co.jp
@@ -16,6 +16,7 @@ Nudel LLC のコーポレートサイト。Next.js 16 (App Router) + Cloudflare 
 - **Animation**: Motion (Framer Motion)
 - **API**: tRPC 11 + TanStack Query 5
 - **Validation**: Zod 4
+- **CMS**: microCMS (microcms-js-sdk)
 - **Email**: Resend
 - **Logging**: Pino
 - **Deploy**: Cloudflare Workers (OpenNext)
@@ -43,16 +44,18 @@ npm run deploy:prod    # 本番デプロイ
 ```
 src/
 ├── app/                   # Next.js App Router (ページ、レイアウト)
-│   └── api/trpc/          # tRPC HTTP エンドポイント
+│   ├── api/trpc/          # tRPC HTTP エンドポイント
+│   └── services/[slug]/   # サービス詳細ページ
 ├── components/
 │   ├── layout/            # Navbar, Footer (サイト共通レイアウト)
 │   ├── sections/          # ページセクション (Hero, Services, Contact 等)
 │   ├── providers/         # React コンテキストプロバイダー (tRPC)
 │   └── ui/                # shadcn/ui ベースの汎用UIコンポーネント
 ├── lib/
+│   ├── microcms/          # microCMS クライアント、型定義、アイコンマッピング
 │   ├── trpc/              # tRPC クライアント設定
 │   ├── email/             # Resend クライアント、メールテンプレート
-│   ├── constants.ts       # サイトデータ定義 (NAV_ITEMS, SERVICES 等)
+│   ├── constants.ts       # サイトデータ定義 (NAV_ITEMS, COMPANY_INFO 等)
 │   ├── utils.ts           # ユーティリティ (cn 関数等)
 │   ├── fonts.ts           # フォント設定
 │   └── logger.ts          # Pino ロガー
@@ -76,11 +79,13 @@ docs/                      # プロジェクトドキュメント
 
 | 変数名                  | 用途                              | 設定場所                   |
 | ----------------------- | --------------------------------- | -------------------------- |
-| `RESEND_API_KEY`        | Resend メール送信 API キー        | Cloudflare / `.env.local`  |
-| `CONTACT_EMAIL_TO`      | お問い合わせメール送信先          | `wrangler.jsonc` の `vars` |
-| `CLOUDFLARE_API_TOKEN`  | Cloudflare デプロイ用             | GitHub Secrets             |
-| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare アカウント ID          | GitHub Secrets             |
-| `LOG_LEVEL`             | Pino ログレベル (default: `info`) | 任意                       |
+| `RESEND_API_KEY`          | Resend メール送信 API キー        | Cloudflare Secret / `.env.local` |
+| `CONTACT_EMAIL_TO`        | お問い合わせメール送信先          | `wrangler.jsonc` の `vars`       |
+| `MICROCMS_SERVICE_DOMAIN` | microCMS サービスドメイン         | `wrangler.jsonc` の `vars` / `.env.local` |
+| `MICROCMS_API_KEY`        | microCMS API キー                 | Cloudflare Secret / `.env.local` |
+| `CLOUDFLARE_API_TOKEN`    | Cloudflare デプロイ用             | GitHub Secrets                   |
+| `CLOUDFLARE_ACCOUNT_ID`   | Cloudflare アカウント ID          | GitHub Secrets                   |
+| `LOG_LEVEL`               | Pino ログレベル (default: `info`) | 任意                             |
 
 ## Branching & Deploy Strategy
 
@@ -92,5 +97,5 @@ docs/                      # プロジェクトドキュメント
 ## Testing Strategy
 
 - **ユニットテスト (Vitest)**: ロジック・コンポーネントの単体テスト。jsdom 環境で実行
-- **E2E テスト (Playwright)**: alpha 環境に対して実行。smoke, home, navigation, contact-form
+- **E2E テスト (Playwright)**: alpha 環境に対して実行。smoke, home, navigation, contact-form, services
 - テスト内で motion/react, next/image, next/link はモック化 (`src/__tests__/setup.ts`)

@@ -1,7 +1,5 @@
 import { expect, test } from "@playwright/test";
 
-test.skip(!!process.env.PLAYWRIGHT_BASE_URL, "Skipped on remote environments");
-
 test.describe("Contact form", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
@@ -26,17 +24,9 @@ test.describe("Contact form", () => {
   });
 
   test("shows success message on successful submission", async ({ page }) => {
-    await page.route("**/api/trpc/**", (route) => {
-      route.fulfill({
-        status: 200,
-        contentType: "application/json",
-        body: JSON.stringify([{ result: { data: { json: { success: true } } } }]),
-      });
-    });
-
-    await page.getByPlaceholder("YOUR NAME").fill("テスト太郎");
-    await page.getByPlaceholder("YOUR EMAIL").fill("test@example.com");
-    await page.getByPlaceholder("HOW CAN WE HELP?").fill("テストメッセージ");
+    await page.getByPlaceholder("YOUR NAME").fill("E2Eテスト");
+    await page.getByPlaceholder("YOUR EMAIL").fill("delivered@resend.dev");
+    await page.getByPlaceholder("HOW CAN WE HELP?").fill("Playwright E2Eテストからの自動送信");
 
     await page.getByRole("button", { name: /Send Inquiry/i }).click();
 

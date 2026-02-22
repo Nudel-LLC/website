@@ -111,7 +111,7 @@ jobs:
           echo "Alpha did not become ready in time"
           exit 1
       - name: Run E2E tests
-        run: npx playwright test --ignore-snapshots --project=chromium e2e/smoke.spec.ts e2e/home.spec.ts e2e/navigation.spec.ts
+        run: npx playwright test --ignore-snapshots --project=chromium
         env:
           PLAYWRIGHT_BASE_URL: https://alpha.nudel.co.jp
       - uses: actions/upload-artifact@v6

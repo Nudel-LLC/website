@@ -26,12 +26,18 @@
   "env": {
     "alpha": {
       "name": "nudel-website-alpha",
+      "vars": {
+        "CONTACT_EMAIL_TO": "delivered@resend.dev"
+      },
       "routes": [
         { "pattern": "alpha.nudel.co.jp", "custom_domain": true }
       ]
     },
     "prod": {
-      "name": "nudel-website"
+      "name": "nudel-website",
+      "vars": {
+        "CONTACT_EMAIL_TO": "info@nudel.co.jp"
+      }
     }
   }
 }

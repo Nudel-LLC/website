@@ -31,12 +31,18 @@
       },
       "routes": [
         { "pattern": "alpha.nudel.co.jp", "custom_domain": true }
-      ]
+      ],
+      "images": {
+        "binding": "IMAGES"
+      }
     },
     "prod": {
       "name": "nudel-website",
       "vars": {
         "CONTACT_EMAIL_TO": "info@nudel.co.jp"
+      },
+      "images": {
+        "binding": "IMAGES"
       }
     }
   }

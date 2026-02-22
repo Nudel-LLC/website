@@ -28,7 +28,8 @@
       "name": "nudel-website-alpha",
       "vars": {
         "CONTACT_EMAIL_TO": "delivered@resend.dev",
-        "SITE_URL": "https://alpha.nudel.co.jp"
+        "SITE_URL": "https://alpha.nudel.co.jp",
+        "MICROCMS_SERVICE_DOMAIN": "nudel-website"
       },
       "routes": [
         { "pattern": "alpha.nudel.co.jp", "custom_domain": true }
@@ -41,7 +42,8 @@
       "name": "nudel-website",
       "vars": {
         "CONTACT_EMAIL_TO": "info@nudel.co.jp",
-        "SITE_URL": "https://nudel.co.jp"
+        "SITE_URL": "https://nudel.co.jp",
+        "MICROCMS_SERVICE_DOMAIN": "nudel-website"
       },
       "images": {
         "binding": "IMAGES"

@@ -2,22 +2,15 @@
 
 ## 全体構成
 
-```
-┌─────────────────────────────────────────────────┐
-│                  Cloudflare Workers              │
-│  ┌───────────────────────────────────────────┐  │
-│  │          Next.js 16 (OpenNext)            │  │
-│  │  ┌─────────────┐    ┌─────────────────┐  │  │
-│  │  │  App Router  │    │  tRPC Server    │  │  │
-│  │  │  (SSR/RSC)   │    │  (API Layer)    │  │  │
-│  │  └─────────────┘    └────────┬────────┘  │  │
-│  └──────────────────────────────┼────────────┘  │
-└─────────────────────────────────┼───────────────┘
-                                  │
-                          ┌───────▼───────┐
-                          │    Resend      │
-                          │  (Email API)   │
-                          └───────────────┘
+```mermaid
+graph TB
+    subgraph CF["Cloudflare Workers"]
+        subgraph NX["Next.js 16 (OpenNext)"]
+            AR["App Router<br/>(SSR/RSC)"]
+            TR["tRPC Server<br/>(API Layer)"]
+        end
+    end
+    TR -->|"メール送信"| RS["Resend<br/>(Email API)"]
 ```
 
 - **フロントエンド**: Next.js App Router による SSR + クライアントサイドインタラクション
@@ -76,60 +69,46 @@ tRPC サーバーの定義とルーター。
 
 ### コンタクトフォーム送信
 
-```
-ユーザー入力
-    │
-    ▼
-ContactForm (React コンポーネント)
-    │  trpc.contact.submit.useMutation()
-    ▼
-tRPC Client (HTTP POST)
-    │
-    ▼
-tRPC Server - contact.submit
-    │  1. Zod でバリデーション
-    │  2. Resend API でメール送信 (並列)
-    │     ├── 管理者への通知メール (CONTACT_EMAIL_TO)
-    │     └── ユーザーへの自動返信
-    │  3. エラー時: TRPCError をスロー
-    ▼
-レスポンス → UI にフィードバック表示
+```mermaid
+graph TD
+    A["ユーザー入力"] --> B["ContactForm<br/>(React コンポーネント)"]
+    B -->|"trpc.contact.submit.useMutation()"| C["tRPC Client (HTTP POST)"]
+    C --> D["tRPC Server - contact.submit"]
+    D -->|"1. Zod バリデーション"| E{"2. Resend API メール送信 (並列)"}
+    E --> F["管理者への通知メール<br/>(CONTACT_EMAIL_TO)"]
+    E --> G["ユーザーへの自動返信"]
+    F --> H["レスポンス → UI にフィードバック表示"]
+    G --> H
+    D -.->|"エラー時"| I["TRPCError をスロー"]
 ```
 
 ### ページレンダリング
 
-```
-リクエスト
-    │
-    ▼
-Cloudflare Workers (OpenNext)
-    │
-    ▼
-Next.js App Router
-    │  layout.tsx: メタデータ, JSON-LD, フォント, TRPCProvider
-    │
-    ▼
-page.tsx: セクションコンポーネントを順に配置
-    ├── Navbar
-    ├── HeroSection
-    ├── StrengthSection
-    ├── FounderSection
-    ├── ServicesSection
-    ├── CompanySection
-    ├── ContactForm (クライアントコンポーネント)
-    └── Footer
+```mermaid
+graph TD
+    A["リクエスト"] --> B["Cloudflare Workers (OpenNext)"]
+    B --> C["Next.js App Router"]
+    C -->|"layout.tsx: メタデータ, JSON-LD, フォント, TRPCProvider"| D["page.tsx"]
+    D --> E["Navbar"]
+    D --> F["HeroSection"]
+    D --> G["StrengthSection"]
+    D --> H["FounderSection"]
+    D --> I["ServicesSection"]
+    D --> J["CompanySection"]
+    D --> K["ContactForm (クライアントコンポーネント)"]
+    D --> L["Footer"]
 ```
 
 ## API 設計
 
 ### tRPC ルーター構成
 
-```typescript
-appRouter
-└── contact
-    └── submit (mutation)
-        Input:  { name: string, email: string, message: string }
-        Output: { success: boolean, message: string }
+```mermaid
+graph LR
+    A["appRouter"] --> B["contact"]
+    B --> C["submit (mutation)"]
+    C --- D["Input: { name, email, message }"]
+    C --- E["Output: { success, message }"]
 ```
 
 - **publicProcedure** を使用（認証なし）

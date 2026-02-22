@@ -28,10 +28,16 @@
       "name": "nudel-website-alpha",
       "routes": [
         { "pattern": "alpha.nudel.co.jp", "custom_domain": true }
-      ]
+      ],
+      "images": {
+        "binding": "IMAGES"
+      }
     },
     "prod": {
-      "name": "nudel-website"
+      "name": "nudel-website",
+      "images": {
+        "binding": "IMAGES"
+      }
     }
   }
 }

@@ -1,41 +1,8 @@
-import { Video, PenTool, Mic2, Zap } from "lucide-react";
-
 export const NAV_ITEMS = [
   { name: "Concept", href: "#concept" },
   { name: "Strength", href: "#strength" },
   { name: "Services", href: "#services" },
   { name: "Company", href: "#company" },
-] as const;
-
-export const SERVICES = [
-  {
-    title: "VIDEO PRODUCTION",
-    description:
-      "本格的なドキュメンタリーテイストの動画から、企業様の紹介PV、新入社員獲得に向けた社員の働きがいなどを映し出すインタビュー動画など、ご要望に応じて様々な形式の映像をプロフェッショナルが制作します。音源は完全オリジナルで制作するため、権利処理などで困ることも一切ございません。",
-    icon: Video,
-    image: "/images/service-video.jpg",
-  },
-  {
-    title: "INTERVIEW & WRITING",
-    description:
-      "インタビューメディア、ルポ、レポーティングなど多岐に渡るジャンルのライティングを取材～執筆まで実施します。柔軟な対応力と各分野における高い専門性が強みです。",
-    icon: PenTool,
-    image: "/images/service-writing.jpg",
-  },
-  {
-    title: "MC & NARRATION",
-    description:
-      "MC・ナレーターの岡崎美玖が、式典・イベント・展示会などの司会を務めます。展示会、学術発表会、地域イベントなどこれまで多岐に渡る経験からお客様のご要望に合わせた役割を提供いたします。また、イベントの規模やコンセプトに合わせた出演者のキャスティングも承っております。",
-    icon: Mic2,
-    image: "/images/service-mc.jpg",
-  },
-  {
-    title: "WEB SERVICES & SOCIAL MEDIA",
-    description:
-      "効果的かつ持続可能性の高い効果的なマーケティング戦略とコンテンツ戦略を提案＆企画します。将来的にはお客様自身で高品質なSNS運営の自走を目指します。",
-    icon: Zap,
-    image: "/images/service-web.jpg",
-  },
 ] as const;
 
 export const FOUNDER = {

@@ -1,11 +1,14 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "motion/react";
-import { ChevronRight } from "lucide-react";
-import { SERVICES } from "@/lib/constants";
+import type { Service } from "@/lib/microcms/types";
+import { ServiceCard } from "./service-card";
 
-export function ServicesSection() {
+type ServicesSectionProps = {
+  services: Service[];
+};
+
+export function ServicesSection({ services }: ServicesSectionProps) {
   return (
     <section id="services" className="py-40 bg-[#fffbf7]">
       <div className="max-w-7xl mx-auto px-6">
@@ -44,44 +47,9 @@ export function ServicesSection() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {SERVICES.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.8 }}
-                className="group bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-orange-100 transition-all duration-500 border border-transparent hover:border-orange-100"
-              >
-                <div className="h-64 overflow-hidden relative">
-                  <Image
-                    src={service.image}
-                    alt={service.title}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-1000"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  />
-                  <div className="absolute inset-0 bg-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <div className="p-10">
-                  <div className="text-orange-500 mb-8 bg-orange-50 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform shadow-sm">
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-lg font-black mb-5 tracking-widest uppercase font-serif italic text-gray-900">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-500 text-sm leading-relaxed mb-10">
-                    {service.description}
-                  </p>
-                  <div className="flex items-center text-[10px] font-black tracking-[0.4em] uppercase text-orange-500 group-hover:translate-x-2 transition-transform">
-                    Details <ChevronRight size={14} className="ml-1" />
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+          {services.map((service, index) => (
+            <ServiceCard key={service.id} service={service} index={index} />
+          ))}
         </div>
       </div>
     </section>

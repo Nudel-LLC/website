@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
   NAV_ITEMS,
-  SERVICES,
   FOUNDER,
   COMPANY_INFO,
   SITE_CONFIG,
@@ -13,18 +12,6 @@ describe("NAV_ITEMS", () => {
     for (const item of NAV_ITEMS) {
       expect(item.name).toBeTruthy();
       expect(item.href).toBeTruthy();
-    }
-  });
-});
-
-describe("SERVICES", () => {
-  it("4つのサービスがあり、全てtitle/description/icon/imageを持つ", () => {
-    expect(SERVICES).toHaveLength(4);
-    for (const service of SERVICES) {
-      expect(service.title).toBeTruthy();
-      expect(service.description).toBeTruthy();
-      expect(service.icon).toBeDefined();
-      expect(service.image).toBeTruthy();
     }
   });
 });

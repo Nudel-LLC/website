@@ -28,7 +28,7 @@ export const contactRouter = router({
       const [adminResult, replyResult] = await Promise.all([
         resend.emails.send({
           from: SENDER,
-          to: SITE_CONFIG.email,
+          to: process.env.CONTACT_EMAIL_TO!,
           replyTo: input.email,
           subject: adminEmail.subject,
           html: adminEmail.html,

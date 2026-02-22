@@ -1,6 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { appRouter } from "../index";
 
+vi.stubEnv("CONTACT_EMAIL_TO", "info@nudel.co.jp");
+
 const mockSend = vi.fn();
 
 vi.mock("@/lib/email/resend", () => ({

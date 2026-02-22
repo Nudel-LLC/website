@@ -59,6 +59,18 @@ Cloudflare Secret として設定するシークレット変数（`wrangler secr
 | `RESEND_API_KEY` | Resend メール送信 API キー |
 | `MICROCMS_API_KEY` | microCMS API キー |
 
+## GitHub Secrets
+
+リポジトリの Settings > Secrets and variables > Actions で以下を設定する。
+ビルド時の静的生成（プリレンダリング）でmicroCMS APIを呼び出すため、CI環境にもmicroCMSの認証情報が必要。
+
+| Secret名 | 説明 |
+|--------|------|
+| `CLOUDFLARE_API_TOKEN` | Cloudflare デプロイ用 API トークン |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare アカウント ID |
+| `MICROCMS_SERVICE_DOMAIN` | microCMS サービスドメイン |
+| `MICROCMS_API_KEY` | microCMS API キー（GET用） |
+
 ## GitHub Environments
 
 リポジトリの Settings > Environments で以下を設定する:

@@ -54,7 +54,7 @@ MICROCMS_SERVICE_DOMAIN=your-service-domain
 MICROCMS_API_KEY=your-api-key
 ```
 
-> **Note**: `CLOUDFLARE_API_TOKEN` と `CLOUDFLARE_ACCOUNT_ID` はデプロイ時のみ必要です。GitHub Secrets に設定されています。
+> **Note**: `CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID`、`MICROCMS_SERVICE_DOMAIN`、`MICROCMS_API_KEY` は GitHub Secrets に設定されています。ビルド時の静的生成で microCMS API を呼び出すため、CI にも microCMS の認証情報が必要です。
 
 ## 開発
 

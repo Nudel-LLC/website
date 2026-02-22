@@ -27,7 +27,8 @@
     "alpha": {
       "name": "nudel-website-alpha",
       "vars": {
-        "CONTACT_EMAIL_TO": "delivered@resend.dev"
+        "CONTACT_EMAIL_TO": "delivered@resend.dev",
+        "SITE_URL": "https://alpha.nudel.co.jp"
       },
       "routes": [
         { "pattern": "alpha.nudel.co.jp", "custom_domain": true }
@@ -39,7 +40,8 @@
     "prod": {
       "name": "nudel-website",
       "vars": {
-        "CONTACT_EMAIL_TO": "info@nudel.co.jp"
+        "CONTACT_EMAIL_TO": "info@nudel.co.jp",
+        "SITE_URL": "https://nudel.co.jp"
       },
       "images": {
         "binding": "IMAGES"

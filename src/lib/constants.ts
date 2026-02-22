@@ -71,6 +71,6 @@ export const SITE_CONFIG = {
   name: "Nudel LLC",
   description:
     "ご縁を力に、価値を形に。企画から実行までを一気通貫で行うクリエイティブカンパニー。動画制作、ライティング、MC・ナレーション、Web・SNS運用を提供します。",
-  url: "https://nudel-llc.com",
+  url: "https://nudel.co.jp",
   email: "info@nudel.co.jp",
 } as const;

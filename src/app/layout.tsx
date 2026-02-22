@@ -19,12 +19,21 @@ export const metadata: Metadata = {
     locale: "ja_JP",
     siteName: "Nudel LLC",
     url: siteUrl,
+    images: [
+      {
+        url: "/images/logo.png",
+        width: 500,
+        height: 500,
+        alt: "Nudel LLC",
+      },
+    ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Nudel LLC | ご縁を力に、価値を形に。",
     description:
       "企画から実行までを一気通貫で行うクリエイティブカンパニー。",
+    images: ["/images/logo.png"],
   },
   ...(!isProduction && {
     robots: { index: false, follow: false },

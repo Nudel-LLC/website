@@ -8,9 +8,6 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
-  "images": {
-    "binding": "IMAGES"
-  },
   "observability": {
     "enabled": false,
     "head_sampling_rate": 1,
@@ -31,10 +28,16 @@
       "name": "nudel-website-alpha",
       "routes": [
         { "pattern": "alpha.nudel.co.jp", "custom_domain": true }
-      ]
+      ],
+      "images": {
+        "binding": "IMAGES"
+      }
     },
     "prod": {
-      "name": "nudel-website"
+      "name": "nudel-website",
+      "images": {
+        "binding": "IMAGES"
+      }
     }
   }
 }

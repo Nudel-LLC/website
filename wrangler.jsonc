@@ -1,6 +1,5 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "nudel-website",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-02-21",
   "compatibility_flags": ["nodejs_compat"],
@@ -21,6 +20,17 @@
       "enabled": true,
       "persist": true,
       "head_sampling_rate": 1
+    }
+  },
+  "env": {
+    "alpha": {
+      "name": "nudel-website-alpha",
+      "routes": [
+        { "pattern": "alpha.nudel.co.jp", "custom_domain": true }
+      ]
+    },
+    "prod": {
+      "name": "nudel-website"
     }
   }
 }

@@ -15,8 +15,9 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit",
-    "preview": "opennextjs-cloudflare build && wrangler dev",
-    "deploy": "opennextjs-cloudflare build && wrangler deploy"
+    "preview": "opennextjs-cloudflare build && wrangler dev --env alpha",
+    "deploy:alpha": "opennextjs-cloudflare build && wrangler deploy --env alpha",
+    "deploy:prod": "opennextjs-cloudflare build && wrangler deploy --env prod"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.21",

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getServiceBySlug, getWorksByServiceId } from "@/lib/microcms/client";
 import { ICON_MAP } from "@/lib/microcms/icon-map";
+import { sanitizeCmsHtml } from "@/lib/microcms/sanitize";
 import type { Work } from "@/lib/microcms/types";
 import { SITE_CONFIG } from "@/lib/constants";
 
@@ -87,7 +88,7 @@ export default async function ServiceDetailPage({ params }: Props) {
         <div className="max-w-4xl mx-auto px-6 mb-20">
           <div
             className="prose prose-lg prose-gray max-w-none prose-headings:font-black prose-headings:tracking-tight prose-a:text-orange-500"
-            dangerouslySetInnerHTML={{ __html: service.detailDescription }}
+            dangerouslySetInnerHTML={{ __html: sanitizeCmsHtml(service.detailDescription) }}
           />
         </div>
       )}
@@ -127,7 +128,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   {work.description && (
                     <div
                       className="text-gray-500 text-sm leading-relaxed line-clamp-3"
-                      dangerouslySetInnerHTML={{ __html: work.description }}
+                      dangerouslySetInnerHTML={{ __html: sanitizeCmsHtml(work.description) }}
                     />
                   )}
                   {work.date && (

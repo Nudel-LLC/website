@@ -23,6 +23,11 @@ function getClient(): Client {
   return _client;
 }
 
+/** テスト用：シングルトンをリセットして次回呼び出し時に再初期化させる */
+export function _resetClientForTesting(): void {
+  _client = null;
+}
+
 /** サービス一覧取得（order昇順） */
 export async function getServices(queries?: MicroCMSQueries) {
   return getClient().getList<Service>({

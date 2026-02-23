@@ -12,11 +12,18 @@ vi.mock("microcms-js-sdk", () => ({
 vi.stubEnv("MICROCMS_SERVICE_DOMAIN", "test-domain");
 vi.stubEnv("MICROCMS_API_KEY", "test-api-key");
 
-import { getServices, getServiceBySlug, getWorksByServiceId } from "./client";
+import {
+  getServices,
+  getServiceBySlug,
+  getWorksByServiceId,
+  _resetClientForTesting,
+} from "./client";
 
 describe("microCMS client", () => {
   beforeEach(() => {
     mockGetList.mockReset();
+    // テスト間でシングルトンが残留しないようにリセット
+    _resetClientForTesting();
   });
 
   describe("getServices", () => {

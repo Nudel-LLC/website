@@ -28,7 +28,7 @@ export function _resetClientForTesting(): void {
   _client = null;
 }
 
-/** サービス一覧取得（order昇順） */
+/** サービス一覧取得（order昇順、未設定は末尾） */
 export async function getServices(queries?: MicroCMSQueries) {
   return getClient().getList<Service>({
     endpoint: "services",
@@ -52,7 +52,7 @@ export async function getServiceBySlug(slug: string) {
   return data.contents[0] ?? null;
 }
 
-/** サービスに紐づく実績一覧取得（order昇順） */
+/** サービスに紐づく実績一覧取得（order昇順、未設定は末尾） */
 export async function getWorksByServiceId(
   serviceId: string,
   queries?: MicroCMSQueries,

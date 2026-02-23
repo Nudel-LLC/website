@@ -10,7 +10,7 @@ export type Service = {
   image: MicroCMSImage;
   /** microCMSで未入力の場合は undefined になる */
   detailDescription?: string;
-  order: number;
+  order?: number;
 } & MicroCMSListContent;
 
 export type Work = {
@@ -22,5 +22,5 @@ export type Work = {
   clientName?: string;
   /** microCMSで未入力の場合は undefined になる */
   date?: string;
-  order: number;
+  order?: number;
 } & MicroCMSListContent;

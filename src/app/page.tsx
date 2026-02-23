@@ -6,8 +6,11 @@ import { FounderSection } from "@/components/sections/founder-section";
 import { ServicesSection } from "@/components/sections/services-section";
 import { CompanySection } from "@/components/sections/company-section";
 import { ContactForm } from "@/components/sections/contact-form";
+import { getServices } from "@/lib/microcms/client";
 
-export default function Home() {
+export default async function Home() {
+  const { contents: services } = await getServices();
+
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-orange-500 selection:text-white antialiased">
       <Navbar />
@@ -15,7 +18,7 @@ export default function Home() {
         <HeroSection />
         <StrengthSection />
         <FounderSection />
-        <ServicesSection />
+        <ServicesSection services={services} />
         <CompanySection />
         <ContactForm />
       </main>

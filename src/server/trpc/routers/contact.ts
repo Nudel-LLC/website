@@ -6,7 +6,6 @@ import {
   buildAdminNotificationEmail,
   buildAutoReplyEmail,
 } from "@/lib/email/templates";
-import { SITE_CONFIG } from "@/lib/constants";
 import { logger } from "@/lib/logger";
 
 const SENDER = "Nudel <noreply@nudel.co.jp>";
@@ -48,7 +47,8 @@ export const contactRouter = router({
         );
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: "メールの送信に失敗しました。しばらく経ってから再度お試しください。",
+          message:
+            "メールの送信に失敗しました。しばらく経ってから再度お試しください。",
         });
       }
 

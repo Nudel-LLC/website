@@ -3,7 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { getServiceBySlug, getWorksByServiceId } from "@/lib/microcms/client";
+import {
+  getServiceBySlug,
+  getServices,
+  getWorksByServiceId,
+} from "@/lib/microcms/client";
 import { ICON_MAP } from "@/lib/microcms/icon-map";
 import type { Work } from "@/lib/microcms/types";
 import { SITE_CONFIG } from "@/lib/constants";
@@ -11,6 +15,17 @@ import { SITE_CONFIG } from "@/lib/constants";
 type Props = {
   params: Promise<{ slug: string }>;
 };
+
+/** ビルド時にサービスページのパラメータを事前生成する */
+export async function generateStaticParams() {
+  try {
+    const { contents } = await getServices({ limit: 100 });
+    return contents.map((service) => ({ slug: service.slug }));
+  } catch {
+    // ビルド時にAPIが利用できない場合は空配列を返す（SSRにフォールバック）
+    return [];
+  }
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;

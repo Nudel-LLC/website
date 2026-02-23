@@ -8,7 +8,8 @@ export type Service = {
   description: string;
   icon: ServiceIcon[];
   image: MicroCMSImage;
-  detailDescription: string;
+  /** microCMSで未入力の場合は undefined になる */
+  detailDescription?: string;
   order: number;
 } & MicroCMSListContent;
 
@@ -16,8 +17,10 @@ export type Work = {
   title: string;
   service: Service;
   thumbnail?: MicroCMSImage;
-  description: string;
+  /** microCMSで未入力の場合は undefined になる */
+  description?: string;
   clientName?: string;
-  date: string;
+  /** microCMSで未入力の場合は undefined になる */
+  date?: string;
   order: number;
 } & MicroCMSListContent;

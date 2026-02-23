@@ -39,7 +39,8 @@ export default async function ServiceDetailPage({ params }: Props) {
     notFound();
   }
 
-  const Icon = ICON_MAP[service.icon[0]];
+  const iconKey = service.icon[0];
+  const Icon = iconKey ? ICON_MAP[iconKey] : null;
   const { contents: works } = await getWorksByServiceId(service.id);
 
   return (
@@ -55,9 +56,11 @@ export default async function ServiceDetailPage({ params }: Props) {
         </Link>
 
         <div className="flex items-center gap-4 mb-8">
-          <div className="text-orange-500 bg-orange-50 w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm">
-            <Icon className="w-6 h-6" />
-          </div>
+          {Icon && (
+            <div className="text-orange-500 bg-orange-50 w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm">
+              <Icon className="w-6 h-6" />
+            </div>
+          )}
           <h1 className="text-3xl md:text-5xl font-black tracking-tighter uppercase font-serif italic text-gray-900">
             {service.title}
           </h1>

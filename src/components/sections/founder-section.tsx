@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { Sparkles } from "lucide-react";
 import { FOUNDER } from "@/lib/constants";
+import { FadeInView } from "@/components/ui/fade-in-view";
 
 export function FounderSection() {
   return (
@@ -37,13 +38,7 @@ export function FounderSection() {
           </motion.h2>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="grid lg:grid-cols-2 gap-20 items-center max-w-6xl mx-auto"
-        >
+        <FadeInView className="grid lg:grid-cols-2 gap-20 items-center max-w-6xl mx-auto">
           {/* Image Section */}
           <div className="relative group">
             <div className="relative z-10 rounded-[60px] overflow-hidden shadow-[0_40px_100px_rgba(255,107,0,0.15)] border-8 border-white">
@@ -104,7 +99,7 @@ export function FounderSection() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </FadeInView>
       </div>
     </section>
   );

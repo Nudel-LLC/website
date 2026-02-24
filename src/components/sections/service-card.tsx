@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "motion/react";
 import { ChevronRight } from "lucide-react";
 import type { Service } from "@/lib/microcms/types";
 import { ICON_MAP } from "@/lib/microcms/icon-map";
+import { FadeInView } from "@/components/ui/fade-in-view";
 
 type ServiceCardProps = {
   service: Service;
@@ -17,12 +17,7 @@ export function ServiceCard({ service, index }: ServiceCardProps) {
   const Icon = iconKey ? ICON_MAP[iconKey] : null;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1, duration: 0.8 }}
-    >
+    <FadeInView delay={index * 0.1}>
       <Link
         href={`/services/${service.slug}`}
         className="group block bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-orange-100 transition-all duration-500 border border-transparent hover:border-orange-100"
@@ -52,6 +47,6 @@ export function ServiceCard({ service, index }: ServiceCardProps) {
           </div>
         </div>
       </Link>
-    </motion.div>
+    </FadeInView>
   );
 }

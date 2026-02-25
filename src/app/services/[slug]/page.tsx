@@ -123,13 +123,13 @@ export default async function ServiceDetailPage({ params }: Props) {
                 key={work.id}
                 className="group bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300"
               >
-                {work.thumbnail && (
-                  <div className="h-48 overflow-hidden relative">
+                {work.image && (
+                  <div className="h-48 overflow-hidden relative bg-gray-50">
                     <Image
-                      src={work.thumbnail.url}
+                      src={work.image.url}
                       alt={work.title}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="object-contain group-hover:scale-105 transition-transform duration-500"
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                   </div>

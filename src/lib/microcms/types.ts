@@ -16,7 +16,7 @@ export type Service = {
 export type Work = {
   title: string;
   service: Service;
-  thumbnail?: MicroCMSImage;
+  image?: MicroCMSImage;
   /** microCMSで未入力の場合は undefined になる */
   description?: string;
   clientName?: string;

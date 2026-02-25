@@ -100,6 +100,30 @@ describe("sanitizeCmsHtml", () => {
     });
   });
 
+  describe("インラインスタイルの検証", () => {
+    it("span の style 属性（文字色）が許可される", () => {
+      const input = '<span style="color: #ff0000;">赤いテキスト</span>';
+      const result = sanitizeCmsHtml(input);
+      expect(result).toContain("style");
+      expect(result).toContain("赤いテキスト");
+    });
+
+    it("span の style 属性（背景色）が許可される", () => {
+      const input =
+        '<span style="background-color: rgb(255, 255, 0);">ハイライト</span>';
+      const result = sanitizeCmsHtml(input);
+      expect(result).toContain("style");
+      expect(result).toContain("ハイライト");
+    });
+
+    it("span 以外のタグの style 属性は除去される", () => {
+      const input = '<p style="color: red;">テキスト</p>';
+      const result = sanitizeCmsHtml(input);
+      expect(result).not.toContain("style");
+      expect(result).toContain("<p>テキスト</p>");
+    });
+  });
+
   describe("XSS 防御", () => {
     it("script タグが除去される", () => {
       const input = "<script>alert('XSS')</script><p>安全なテキスト</p>";

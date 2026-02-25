@@ -28,12 +28,14 @@ const ALLOWED_TAGS = [
   "img",
   "figure",
   "figcaption",
+  "span",
 ];
 
 /** microCMS リッチテキストフィールドの許可属性 */
 const ALLOWED_ATTRIBUTES: sanitizeHtml.IOptions["allowedAttributes"] = {
   a: ["href", "target", "rel"],
   img: ["src", "alt", "width", "height"],
+  span: ["style"],
   "*": ["class"],
 };
 

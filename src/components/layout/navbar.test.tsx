@@ -17,12 +17,12 @@ describe("Navbar", () => {
     expect(screen.getAllByText("Company").length).toBeGreaterThan(0);
   });
 
-  it("Contact リンクが #contact を指す", () => {
+  it("Contact リンクが /#contact を指す", () => {
     render(<Navbar />);
     const contactLinks = screen
       .getAllByText(/contact/i)
       .filter(
-        (el) => el.tagName === "A" && el.getAttribute("href") === "#contact",
+        (el) => el.tagName === "A" && el.getAttribute("href") === "/#contact",
       );
     expect(contactLinks.length).toBeGreaterThan(0);
   });

@@ -13,7 +13,7 @@ export function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-2xl border-b border-orange-100">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <Link
-          href="#"
+          href="/"
           className="text-2xl font-black tracking-tighter text-gray-900 font-serif italic"
         >
           Nudel{" "}
@@ -32,7 +32,7 @@ export function Navbar() {
             </Link>
           ))}
           <Link
-            href="#contact"
+            href="/#contact"
             className="px-8 py-3 bg-orange-500 text-white text-[11px] font-black rounded-full hover:bg-orange-600 hover:shadow-lg hover:shadow-orange-200 transition-all tracking-widest uppercase"
           >
             Contact
@@ -70,7 +70,7 @@ export function Navbar() {
                 </Link>
               ))}
               <Link
-                href="#contact"
+                href="/#contact"
                 className="w-full py-4 bg-orange-500 text-white text-center font-black rounded-xl"
                 onClick={() => setIsOpen(false)}
               >

@@ -38,7 +38,7 @@ test.describe("Navigation", () => {
 
       await expect(page.getByRole("link", { name: "Concept" })).toBeVisible();
       await expect(page.getByRole("link", { name: "Strength" })).toBeVisible();
-      await expect(page.getByRole("link", { name: "Services" })).toBeVisible();
+      await expect(page.getByRole("link", { name: "Services", exact: true })).toBeVisible();
       await expect(page.getByRole("link", { name: "Company" })).toBeVisible();
 
       await closeBtn.click();

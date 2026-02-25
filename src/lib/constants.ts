@@ -1,8 +1,8 @@
 export const NAV_ITEMS = [
-  { name: "Concept", href: "#concept" },
-  { name: "Strength", href: "#strength" },
-  { name: "Services", href: "#services" },
-  { name: "Company", href: "#company" },
+  { name: "Concept", href: "/#concept" },
+  { name: "Strength", href: "/#strength" },
+  { name: "Services", href: "/#services" },
+  { name: "Company", href: "/#company" },
 ] as const;
 
 export const FOUNDER = {

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ContactForm } from "./contact-form";
+import { ContactFormCard } from "./contact-form";
 
 // trpc クライアントをモック
 const mockMutate = vi.fn();
@@ -31,14 +31,14 @@ vi.mock("@/lib/trpc/client", () => ({
   },
 }));
 
-describe("ContactForm", () => {
+describe("ContactFormCard", () => {
   beforeEach(() => {
     mockMutate.mockClear();
     mockMutationState = { isPending: false, isError: false };
   });
 
   it("フォーム初期状態でplaceholderとSend Inquiryボタンが表示される", () => {
-    render(<ContactForm />);
+    render(<ContactFormCard />);
     expect(screen.getByPlaceholderText("YOUR NAME")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("YOUR EMAIL")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("HOW CAN WE HELP?")).toBeInTheDocument();
@@ -49,7 +49,7 @@ describe("ContactForm", () => {
 
   it("フォーム入力値を更新できる", async () => {
     const user = userEvent.setup();
-    render(<ContactForm />);
+    render(<ContactFormCard />);
 
     const nameInput = screen.getByPlaceholderText("YOUR NAME");
     await user.type(nameInput, "テスト太郎");
@@ -62,7 +62,7 @@ describe("ContactForm", () => {
 
   it("送信成功後にサンクスメッセージが表示される", async () => {
     const user = userEvent.setup();
-    render(<ContactForm />);
+    render(<ContactFormCard />);
 
     await user.type(screen.getByPlaceholderText("YOUR NAME"), "テスト");
     await user.type(
@@ -79,7 +79,7 @@ describe("ContactForm", () => {
 
   it("送信失敗時にエラーメッセージが表示される", () => {
     mockMutationState = { isPending: false, isError: true };
-    render(<ContactForm />);
+    render(<ContactFormCard />);
 
     expect(
       screen.getByText("送信に失敗しました。もう一度お試しください。"),
@@ -87,7 +87,7 @@ describe("ContactForm", () => {
   });
 
   it("Let's Talkヘッダーが表示される", () => {
-    render(<ContactForm />);
+    render(<ContactFormCard />);
     expect(screen.getByText("Let's Talk")).toBeInTheDocument();
   });
 });

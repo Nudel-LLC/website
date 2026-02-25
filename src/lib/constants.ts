@@ -8,7 +8,7 @@ export const NAV_ITEMS = [
 export const FOUNDER = {
   name: "岡崎 美玖",
   nameEn: "Miku Okazaki",
-  title: "CEO",
+  title: "代表",
   image: "/images/founder.png",
   bio: [
     {

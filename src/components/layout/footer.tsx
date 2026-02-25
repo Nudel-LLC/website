@@ -11,11 +11,6 @@ export function Footer() {
               Nudel{" "}
               <span className="text-orange-500 font-sans not-italic">LLC</span>
             </h3>
-            <p className="text-gray-500 text-sm leading-relaxed font-medium">
-              一気通貫。一期一会。私たちは「人の良さを引き出す」ために、
-              <br className="hidden md:block" />
-              クリエイティブの全ての領域をしなやかに繋ぎ合わせます。
-            </p>
           </div>
           <div className="flex gap-20">
             <div>

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "motion/react";
-import { Repeat, Layers } from "lucide-react";
+import { Repeat, Layers, Users } from "lucide-react";
 
 export function StrengthSection() {
   return (
@@ -12,7 +12,7 @@ export function StrengthSection() {
     >
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-50/80 rounded-full blur-[100px] -mr-48 -mt-48" />
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-24 items-center">
+        <div className="grid lg:grid-cols-2 gap-20 items-center">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -29,38 +29,63 @@ export function StrengthSection() {
                 ひとつに繋ぐ。
               </span>
             </h2>
-            <div className="space-y-8 text-gray-600 leading-relaxed text-lg font-medium">
+            <div className="space-y-8 text-gray-600 leading-relaxed text-lg font-medium mb-10">
               <p>
                 「YouTubeを始めたい」「メディアを立ち上げたい」「イベントをやりたい」——
                 複数の施策を別々の会社に依頼すると、品質のバラつきや多大な管理コストが発生します。
               </p>
               <p>
-                Nudel
-                LLCは、企画から実行までを一気通貫で行うクリエイティブカンパニーです。
+                Nudelは、企画から実行までを一気通貫で行うクリエイティブカンパニーです。
                 ひとつの対話から始まったご縁を、動画、記事、イベントへとシームレスに発展させ、ブランドを彩ります。
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8">
-                <div className="p-8 bg-orange-50/30 border border-orange-100 rounded-[32px] hover:bg-orange-50 transition-colors group">
-                  <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform">
+            </div>
+
+            <div className="grid grid-cols-1 gap-6">
+              <div className="p-6 bg-orange-50/30 border border-orange-100 rounded-3xl hover:bg-orange-50 transition-colors group">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform flex-shrink-0">
                     <Repeat size={20} className="text-orange-500" />
                   </div>
-                  <h4 className="text-gray-900 font-black mb-3 flex items-center gap-2 text-sm tracking-widest uppercase">
-                    圧倒的スピード
-                  </h4>
-                  <p className="text-sm text-gray-500 leading-relaxed">
-                    深い理解を活かし、他社が数ヶ月かかる展開をわずか数週間で形にします。
-                  </p>
+                  <div>
+                    <h4 className="text-gray-900 font-black mb-2 text-sm tracking-widest uppercase">
+                      圧倒的スピード
+                    </h4>
+                    <p className="text-sm text-gray-500 leading-relaxed">
+                      深い理解を活かし、他社が数ヶ月かかる展開をわずか数週間で形にします。
+                    </p>
+                  </div>
                 </div>
-                <div className="p-8 bg-orange-50/30 border border-orange-100 rounded-[32px] hover:bg-orange-50 transition-colors group">
-                  <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform">
+              </div>
+
+              <div className="p-6 bg-orange-50/30 border border-orange-100 rounded-3xl hover:bg-orange-50 transition-colors group">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform flex-shrink-0">
                     <Layers size={20} className="text-orange-500" />
                   </div>
-                  <h4 className="text-gray-900 font-black mb-3 flex items-center gap-2 text-sm tracking-widest uppercase">
-                    一貫したクオリティ
-                  </h4>
-                  <p className="text-sm text-gray-500 leading-relaxed">
-                    複数のメディアを横断しても、ブランドの本質がブレることはありません。
-                  </p>
+                  <div>
+                    <h4 className="text-gray-900 font-black mb-2 text-sm tracking-widest uppercase">
+                      一貫したクオリティ
+                    </h4>
+                    <p className="text-sm text-gray-500 leading-relaxed">
+                      複数のメディアを横断しても、ブランドの本質がブレることはありません。
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 bg-orange-50/30 border border-orange-100 rounded-3xl hover:bg-orange-50 transition-colors group">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform flex-shrink-0">
+                    <Users size={20} className="text-orange-500" />
+                  </div>
+                  <div>
+                    <h4 className="text-gray-900 font-black mb-2 text-sm tracking-widest uppercase">
+                      スペシャリストが所属
+                    </h4>
+                    <p className="text-sm text-gray-500 leading-relaxed">
+                      大手マスメディアでの動画制作、大手代理店でのデザイン作成業務、代表自ら自信を持って見つけた人材が対応します。
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -82,17 +107,7 @@ export function StrengthSection() {
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              <div className="absolute bottom-12 left-12 right-12 p-12 bg-white/90 backdrop-blur-xl rounded-[40px] shadow-2xl">
-                <p className="text-orange-500 font-black text-[10px] tracking-[0.5em] uppercase mb-4">
-                  Fresh Insight
-                </p>
-                <p className="text-gray-900 text-2xl font-bold leading-relaxed font-serif italic">
-                  「あの時の感覚」を共有できる。
-                  <br />
-                  その信頼が、しなやかな成果を生む。
-                </p>
-              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
             </div>
             <div className="absolute -top-10 -left-10 w-40 h-40 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob" />
             <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-yellow-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000" />

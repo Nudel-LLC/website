@@ -20,7 +20,7 @@ test.describe("Navigation", () => {
     test("displays Contact CTA button", async ({ page }) => {
       const contactBtn = page.locator("nav").getByRole("link", { name: "Contact" });
       await expect(contactBtn).toBeVisible();
-      await expect(contactBtn).toHaveAttribute("href", "#contact");
+      await expect(contactBtn).toHaveAttribute("href", "/#contact");
     });
   });
 

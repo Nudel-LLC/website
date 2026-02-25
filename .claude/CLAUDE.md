@@ -99,3 +99,4 @@ docs/                      # プロジェクトドキュメント
 - **ユニットテスト (Vitest)**: ロジック・コンポーネントの単体テスト。jsdom 環境で実行
 - **E2E テスト (Playwright)**: alpha 環境に対して実行。smoke, home, navigation, contact-form, services
 - テスト内で motion/react, next/image, next/link はモック化 (`src/__tests__/setup.ts`)
+- **push / PR 作成前に必ず `npm run test` と `npm run e2e` を実行し、全テストが通ることを確認すること**

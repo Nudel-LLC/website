@@ -44,7 +44,7 @@ test.describe("Services", () => {
 
       await page.goto(href!);
 
-      await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+      await expect(page.getByRole("heading", { level: 1 }).first()).toBeVisible();
       await expect(page.locator("nav")).toBeVisible();
       await expect(page.locator("footer")).toBeVisible();
     });

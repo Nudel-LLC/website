@@ -5,7 +5,6 @@ import { StrengthSection } from "@/components/sections/strength-section";
 import { FounderSection } from "@/components/sections/founder-section";
 import { ServicesSection } from "@/components/sections/services-section";
 import { CompanySection } from "@/components/sections/company-section";
-import { ContactForm } from "@/components/sections/contact-form";
 import { getServices } from "@/lib/microcms/client";
 
 export default async function Home() {
@@ -20,7 +19,6 @@ export default async function Home() {
         <FounderSection />
         <ServicesSection services={services} />
         <CompanySection />
-        <ContactForm />
       </main>
       <Footer />
     </div>

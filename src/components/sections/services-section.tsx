@@ -16,13 +16,6 @@ export function ServicesSection({ services }: ServicesSectionProps) {
           badge="What We Do"
           titleItalic="OUR"
           titleAccent="SOLUTIONS"
-          description={
-            <>
-              一つのきっかけを、無限の展開へ。
-              <br />
-              全ての事業領域をNudel LLCだけで完結させるメリットをご提案します。
-            </>
-          }
           className="mb-28"
         />
 

@@ -27,22 +27,24 @@ test.describe("Services", () => {
   });
 
   test.describe("Service detail page", () => {
-    test("returns HTTP 200", async ({ page }) => {
-      // トップページからサービスのslugを取得して遷移
+    let serviceHref: string;
+
+    test.beforeAll(async ({ browser }) => {
+      // slug を1回だけ取得してキャッシュ
+      const page = await browser.newPage();
       await page.goto("/");
       const firstCard = page.locator("#services a[href^='/services/']").first();
-      const href = await firstCard.getAttribute("href");
+      serviceHref = (await firstCard.getAttribute("href"))!;
+      await page.close();
+    });
 
-      const response = await page.goto(href!);
+    test("returns HTTP 200", async ({ page }) => {
+      const response = await page.goto(serviceHref);
       expect(response?.status()).toBe(200);
     });
 
     test("displays service title and description", async ({ page }) => {
-      await page.goto("/");
-      const firstCard = page.locator("#services a[href^='/services/']").first();
-      const href = await firstCard.getAttribute("href");
-
-      await page.goto(href!);
+      await page.goto(serviceHref);
 
       await expect(page.getByRole("heading", { level: 1 }).first()).toBeVisible();
       await expect(page.locator("nav")).toBeVisible();
@@ -50,11 +52,7 @@ test.describe("Services", () => {
     });
 
     test("has back link to services section", async ({ page }) => {
-      await page.goto("/");
-      const firstCard = page.locator("#services a[href^='/services/']").first();
-      const href = await firstCard.getAttribute("href");
-
-      await page.goto(href!);
+      await page.goto(serviceHref);
 
       const backLink = page.getByRole("link", { name: "サービス一覧に戻る" });
       await expect(backLink).toBeVisible();
@@ -62,11 +60,7 @@ test.describe("Services", () => {
     });
 
     test("back link navigates to top page services section", async ({ page }) => {
-      await page.goto("/");
-      const firstCard = page.locator("#services a[href^='/services/']").first();
-      const href = await firstCard.getAttribute("href");
-
-      await page.goto(href!);
+      await page.goto(serviceHref);
 
       await page.getByRole("link", { name: "サービス一覧に戻る" }).click();
       await page.waitForURL("/#services");
@@ -75,22 +69,14 @@ test.describe("Services", () => {
     });
 
     test("displays service image", async ({ page }) => {
-      await page.goto("/");
-      const firstCard = page.locator("#services a[href^='/services/']").first();
-      const href = await firstCard.getAttribute("href");
-
-      await page.goto(href!);
+      await page.goto(serviceHref);
 
       const serviceImage = page.locator("img[src*='microcms-assets.io']").first();
       await expect(serviceImage).toBeVisible();
     });
 
     test("has correct meta title", async ({ page }) => {
-      await page.goto("/");
-      const firstCard = page.locator("#services a[href^='/services/']").first();
-      const href = await firstCard.getAttribute("href");
-
-      await page.goto(href!);
+      await page.goto(serviceHref);
 
       await expect(page).toHaveTitle(/Nudel LLC/);
     });

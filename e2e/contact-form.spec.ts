@@ -30,7 +30,7 @@ test.describe("Contact form", () => {
 
     await page.getByRole("button", { name: /Send Inquiry/i }).click();
 
-    await expect(page.getByText("お問い合わせありがとうございます。")).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText("お問い合わせありがとうございます。")).toBeVisible({ timeout: 5000 });
   });
 
   test("shows error message on failed submission", async ({ page }) => {
@@ -48,7 +48,7 @@ test.describe("Contact form", () => {
 
     await page.getByRole("button", { name: /Send Inquiry/i }).click();
 
-    await expect(page.getByText("送信に失敗しました。もう一度お試しください。")).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText("送信に失敗しました。もう一度お試しください。")).toBeVisible({ timeout: 5000 });
   });
 
   test("validates required fields", async ({ page }) => {

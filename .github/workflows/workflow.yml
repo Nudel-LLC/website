@@ -102,16 +102,26 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npx playwright install chromium --with-deps
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ hashFiles('package-lock.json') }}
+      - name: Install Playwright chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium
+      - name: Install Playwright system deps
+        run: npx playwright install-deps chromium
       - name: Wait for deployment
         run: |
-          for i in $(seq 1 30); do
+          for i in $(seq 1 60); do
             if curl -sf https://alpha.nudel.co.jp > /dev/null 2>&1; then
               echo "Alpha is ready"
               exit 0
             fi
-            echo "Waiting for alpha... ($i/30)"
-            sleep 10
+            echo "Waiting for alpha... ($i/60)"
+            sleep 3
           done
           echo "Alpha did not become ready in time"
           exit 1

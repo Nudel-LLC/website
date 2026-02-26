@@ -9,7 +9,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: isCI,
   retries: isCI ? 2 : 0,
-  workers: isCI ? "50%" : undefined,
+  workers: isCI ? 2 : undefined,
   reporter: isCI ? [["github"], ["html", { open: "never" }]] : [["html", { open: "on-failure" }]],
 
   use: {

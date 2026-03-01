@@ -68,7 +68,6 @@
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^5.1.4",
     "@vitest/coverage-v8": "^4.0.18",
-    "better-npm-audit": "^3.11.0",
     "jsdom": "^28.1.0",
     "shadcn": "^3.8.5",
     "tailwindcss": "^4",

@@ -1,0 +1,17 @@
+{
+  "GHSA-7r86-cg39-jmmj": {
+    "active": true,
+    "notes": "@opennextjs/cloudflare の推移的依存 (minimatch ReDoS: matchOne)。上流の修正待ち。",
+    "expiry": "2026-06-01T00:00:00.000Z"
+  },
+  "GHSA-23c5-xmqv-rm74": {
+    "active": true,
+    "notes": "@opennextjs/cloudflare の推移的依存 (minimatch ReDoS: extglobs)。上流の修正待ち。",
+    "expiry": "2026-06-01T00:00:00.000Z"
+  },
+  "GHSA-fj3w-jwp8-x2g3": {
+    "active": true,
+    "notes": "@opennextjs/cloudflare の推移的依存 (fast-xml-parser stack overflow)。上流の修正待ち。",
+    "expiry": "2026-06-01T00:00:00.000Z"
+  }
+}

@@ -21,4 +21,46 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm audit --audit-level=high
+      - name: npm audit --audit-level=high
+        run: |
+          # ----- 既知の除外設定 (期限: 2026-06-01) -----
+          # @opennextjs/cloudflare の推移的依存による脆弱性。
+          # 上流パッケージの修正待ちのため一時的に除外。
+          # 期限を過ぎたら除外を削除し、再評価すること。
+          #
+          # - GHSA-7r86-cg39-jmmj: minimatch ReDoS (matchOne)
+          # - GHSA-23c5-xmqv-rm74: minimatch ReDoS (extglobs)
+          # - GHSA-fj3w-jwp8-x2g3: fast-xml-parser stack overflow
+          EXPIRY="2026-06-01"
+          TODAY=$(date +%Y-%m-%d)
+          if [ "$TODAY" \> "$EXPIRY" ]; then
+            echo "::error::npm audit の脆弱性除外が期限切れです ($EXPIRY)。除外設定を削除して対応してください。"
+            npm audit --audit-level=high
+            exit 1
+          fi
+          npm audit --audit-level=high 2>&1 && exit 0
+          echo "---"
+          echo "npm audit found vulnerabilities. Checking if all are known exclusions..."
+          UNKNOWN=$(npm audit --json 2>&1 | python3 -c "
+          import json, sys
+          KNOWN = {'GHSA-7r86-cg39-jmmj', 'GHSA-23c5-xmqv-rm74', 'GHSA-fj3w-jwp8-x2g3'}
+          data = json.load(sys.stdin)
+          vulns = data.get('vulnerabilities', {})
+          unknown = []
+          for name, info in vulns.items():
+              if info.get('severity') not in ('high', 'critical'):
+                  continue
+              for v in info.get('via', []):
+                  if isinstance(v, dict) and v.get('url'):
+                      ghsa = v['url'].split('/')[-1]
+                      if ghsa not in KNOWN:
+                          unknown.append(f'{v.get(\"name\",name)}: {v[\"url\"]}')
+          for u in unknown:
+              print(u)
+          ")
+          if [ -n "$UNKNOWN" ]; then
+            echo "::error::未知の high/critical 脆弱性が見つかりました:"
+            echo "$UNKNOWN"
+            exit 1
+          fi
+          echo "All high vulnerabilities are known exclusions (expires: $EXPIRY). Passing."

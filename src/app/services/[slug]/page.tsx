@@ -145,7 +145,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   )}
                   {work.description && (
                     <div
-                      className="text-gray-500 text-sm leading-relaxed line-clamp-3"
+                      className="text-gray-500 text-sm leading-relaxed"
                       dangerouslySetInnerHTML={{ __html: sanitizeCmsHtml(work.description) }}
                     />
                   )}

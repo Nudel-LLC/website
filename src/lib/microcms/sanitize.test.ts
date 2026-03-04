@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { sanitizeCmsHtml } from "./sanitize";
+import { sanitizeCmsHtml, stripHtml } from "./sanitize";
 
 describe("sanitizeCmsHtml", () => {
   describe("許可タグの通過", () => {
@@ -162,5 +162,30 @@ describe("sanitizeCmsHtml", () => {
     it("プレーンテキストはそのまま返る", () => {
       expect(sanitizeCmsHtml("テキストのみ")).toBe("テキストのみ");
     });
+  });
+});
+
+describe("stripHtml", () => {
+  it("HTML タグを除去してプレーンテキストを返す", () => {
+    const input = "<p>テキスト</p>";
+    expect(stripHtml(input)).toBe("テキスト");
+  });
+
+  it("リンクタグを除去してリンクテキストだけを返す", () => {
+    const input = '<p>詳細は<a href="https://example.com">こちら</a>をご覧ください</p>';
+    expect(stripHtml(input)).toBe("詳細はこちらをご覧ください");
+  });
+
+  it("ネストされた HTML も除去される", () => {
+    const input = "<div><p><strong>太字</strong>のテキスト</p></div>";
+    expect(stripHtml(input)).toBe("太字のテキスト");
+  });
+
+  it("プレーンテキストはそのまま返る", () => {
+    expect(stripHtml("プレーンテキスト")).toBe("プレーンテキスト");
+  });
+
+  it("空文字列は空文字列を返す", () => {
+    expect(stripHtml("")).toBe("");
   });
 });

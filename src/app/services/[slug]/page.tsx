@@ -9,7 +9,7 @@ import {
   getWorksByServiceId,
 } from "@/lib/microcms/client";
 import { ICON_MAP } from "@/lib/microcms/icon-map";
-import { sanitizeCmsHtml } from "@/lib/microcms/sanitize";
+import { sanitizeCmsHtml, stripHtml } from "@/lib/microcms/sanitize";
 import type { Work } from "@/lib/microcms/types";
 import { SITE_CONFIG } from "@/lib/constants";
 
@@ -38,10 +38,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${service.title} | ${SITE_CONFIG.name}`,
-    description: service.description,
+    description: stripHtml(service.description),
     openGraph: {
       title: `${service.title} | ${SITE_CONFIG.name}`,
-      description: service.description,
+      description: stripHtml(service.description),
       images: [{ url: service.image.url }],
     },
   };
@@ -82,9 +82,10 @@ export default async function ServiceDetailPage({ params }: Props) {
           </h1>
         </div>
 
-        <p className="text-gray-500 text-lg leading-relaxed mb-12">
-          {service.description}
-        </p>
+        <div
+          className="text-gray-500 text-lg leading-relaxed mb-12 [&_a]:text-orange-500 [&_a]:underline"
+          dangerouslySetInnerHTML={{ __html: sanitizeCmsHtml(service.description) }}
+        />
       </div>
 
       {/* サービス画像 */}

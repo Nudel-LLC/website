@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import type { Service } from "@/lib/microcms/types";
 import { ICON_MAP } from "@/lib/microcms/icon-map";
+import { stripHtml } from "@/lib/microcms/sanitize";
 import { FadeInView } from "@/components/ui/fade-in-view";
 
 type ServiceCardProps = {
@@ -40,7 +41,7 @@ export function ServiceCard({ service, index }: ServiceCardProps) {
             {service.title}
           </h3>
           <p className="text-gray-500 text-sm leading-relaxed mb-10">
-            {service.description}
+            {stripHtml(service.description)}
           </p>
           <div className="flex items-center text-[10px] font-black tracking-[0.4em] uppercase text-orange-500 group-hover:translate-x-2 transition-transform">
             Details <ChevronRight size={14} className="ml-1" />

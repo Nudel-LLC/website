@@ -50,3 +50,14 @@ export function sanitizeCmsHtml(html: string): string {
     allowedSchemes: ["https", "http", "mailto"],
   });
 }
+
+/**
+ * microCMS のリッチテキスト HTML からすべてのタグを除去してプレーンテキストを返す
+ * meta description やリンク内テキストなど、HTML を含められない箇所で使用すること
+ */
+export function stripHtml(html: string): string {
+  return sanitizeHtml(html, {
+    allowedTags: [],
+    allowedAttributes: {},
+  });
+}

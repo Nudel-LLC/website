@@ -145,7 +145,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   )}
                   {work.description && (
                     <div
-                      className="text-gray-500 text-sm leading-relaxed [&_a]:text-orange-500 [&_a]:underline [&_a]:hover:text-orange-600 [&_a]:transition-colors"
+                      className="prose prose-sm prose-gray max-w-none text-gray-500 prose-a:text-orange-500 prose-a:hover:text-orange-600 prose-a:transition-colors"
                       dangerouslySetInnerHTML={{ __html: sanitizeCmsHtml(work.description) }}
                     />
                   )}

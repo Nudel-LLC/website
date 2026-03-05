@@ -23,6 +23,11 @@ function getClient(): Client {
   return _client;
 }
 
+/** microCMS の環境変数が設定されているかを返す */
+export function isMicroCMSAvailable(): boolean {
+  return !!(process.env.MICROCMS_SERVICE_DOMAIN && process.env.MICROCMS_API_KEY);
+}
+
 /** テスト用：シングルトンをリセットして次回呼び出し時に再初期化させる */
 export function _resetClientForTesting(): void {
   _client = null;

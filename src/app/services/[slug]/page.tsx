@@ -7,6 +7,7 @@ import {
   getServiceBySlug,
   getServices,
   getWorksByServiceId,
+  isMicroCMSAvailable,
 } from "@/lib/microcms/client";
 import { ICON_MAP } from "@/lib/microcms/icon-map";
 import { sanitizeCmsHtml } from "@/lib/microcms/sanitize";
@@ -19,13 +20,11 @@ type Props = {
 
 /** ビルド時にサービスページのパラメータを事前生成する */
 export async function generateStaticParams() {
-  try {
-    const { contents } = await getServices({ limit: 100 });
-    return contents.map((service) => ({ slug: service.slug }));
-  } catch {
-    // ビルド時にAPIが利用できない場合は空配列を返す（SSRにフォールバック）
+  if (!isMicroCMSAvailable()) {
     return [];
   }
+  const { contents } = await getServices({ limit: 100 });
+  return contents.map((service) => ({ slug: service.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

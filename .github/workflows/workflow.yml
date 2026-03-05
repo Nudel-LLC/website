@@ -90,8 +90,17 @@ jobs:
         run: |
           WORKER_NAME="nudel-website-pr-${{ github.event.pull_request.number }}"
           PREVIEW_URL="https://${WORKER_NAME}.workers.dev"
+          SECRETS_JSON='{"MICROCMS_API_KEY":"'"$MICROCMS_API_KEY"'","RESEND_API_KEY":"'"$RESEND_API_KEY"'"}'
+
+          # シークレットを先に登録（Worker 未作成の場合は先にデプロイして作成）
+          if ! echo "$SECRETS_JSON" | npx wrangler secret bulk --name "$WORKER_NAME" 2>/dev/null; then
+            echo "Worker が未作成のため、先にデプロイして作成します..."
+            npm run deploy:preview -- --name "$WORKER_NAME" --var "SITE_URL:${PREVIEW_URL}"
+            echo "$SECRETS_JSON" | npx wrangler secret bulk --name "$WORKER_NAME"
+          fi
+
+          # シークレット登録済みの状態でデプロイ
           npm run deploy:preview -- --name "$WORKER_NAME" --var "SITE_URL:${PREVIEW_URL}"
-          echo '{"MICROCMS_API_KEY":"'"$MICROCMS_API_KEY"'","RESEND_API_KEY":"'"$RESEND_API_KEY"'"}' | npx wrangler secret bulk --name "$WORKER_NAME"
           echo "url=${PREVIEW_URL}" >> "$GITHUB_OUTPUT"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

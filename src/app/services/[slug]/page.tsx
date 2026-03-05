@@ -105,7 +105,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       {service.detailDescription && (
         <div className="max-w-4xl mx-auto px-6 mb-20">
           <div
-            className="prose prose-lg prose-gray max-w-none prose-headings:font-black prose-headings:tracking-tight prose-a:text-orange-500"
+            className="prose prose-lg prose-gray max-w-none prose-headings:font-black prose-headings:tracking-tight prose-a:text-orange-500 prose-a:hover:text-orange-600 prose-a:transition-colors"
             dangerouslySetInnerHTML={{ __html: sanitizeCmsHtml(service.detailDescription) }}
           />
         </div>
@@ -145,7 +145,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   )}
                   {work.description && (
                     <div
-                      className="text-gray-500 text-sm leading-relaxed"
+                      className="prose prose-sm prose-gray max-w-none text-gray-500 prose-a:text-orange-500 prose-a:hover:text-orange-600 prose-a:transition-colors"
                       dangerouslySetInnerHTML={{ __html: sanitizeCmsHtml(work.description) }}
                     />
                   )}

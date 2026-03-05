@@ -58,11 +58,34 @@ describe("sanitizeCmsHtml", () => {
       expect(result).toContain("<br />");
     });
 
+    it("下線 (u) が許可される", () => {
+      const input = "<u>下線テキスト</u>";
+      expect(sanitizeCmsHtml(input)).toBe("<u>下線テキスト</u>");
+    });
+
+    it("下付き文字 (sub) が許可される", () => {
+      const input = "<p>H<sub>2</sub>O</p>";
+      const result = sanitizeCmsHtml(input);
+      expect(result).toContain("<sub>2</sub>");
+    });
+
+    it("上付き文字 (sup) が許可される", () => {
+      const input = "<p>E=mc<sup>2</sup></p>";
+      const result = sanitizeCmsHtml(input);
+      expect(result).toContain("<sup>2</sup>");
+    });
+
     it("装飾の組み合わせが保持される", () => {
       const input = "<p><strong><em>太字斜体</em></strong>と<s>打ち消し</s></p>";
       const result = sanitizeCmsHtml(input);
       expect(result).toContain("<strong><em>太字斜体</em></strong>");
       expect(result).toContain("<s>打ち消し</s>");
+    });
+
+    it("下線と太字の組み合わせが保持される", () => {
+      const input = "<p><u><strong>太字下線</strong></u></p>";
+      const result = sanitizeCmsHtml(input);
+      expect(result).toContain("<u><strong>太字下線</strong></u>");
     });
   });
 
@@ -98,6 +121,52 @@ describe("sanitizeCmsHtml", () => {
       const result = sanitizeCmsHtml(input);
       expect(result).toContain("color");
       expect(result).toContain("font-size");
+    });
+
+    it("HEX カラー値が許可される (#fff, #ff0000, #ff000080)", () => {
+      expect(sanitizeCmsHtml('<span style="color: #fff;">テキスト</span>')).toContain("color");
+      expect(sanitizeCmsHtml('<span style="color: #ff0000;">テキスト</span>')).toContain("color");
+      expect(sanitizeCmsHtml('<span style="color: #ff000080;">テキスト</span>')).toContain("color");
+    });
+
+    it("rgb/rgba カラー値が許可される", () => {
+      expect(sanitizeCmsHtml('<span style="color: rgb(255, 0, 0);">テキスト</span>')).toContain("color");
+      expect(sanitizeCmsHtml('<span style="color: rgba(255, 0, 0, 0.5);">テキスト</span>')).toContain("color");
+    });
+
+    it("hsl/hsla カラー値が許可される", () => {
+      expect(sanitizeCmsHtml('<span style="background-color: hsl(120, 100%, 50%);">テキスト</span>')).toContain("background-color");
+      expect(sanitizeCmsHtml('<span style="background-color: hsla(120, 100%, 50%, 0.3);">テキスト</span>')).toContain("background-color");
+    });
+
+    it("キーワードカラー値が許可される", () => {
+      expect(sanitizeCmsHtml('<span style="color: red;">テキスト</span>')).toContain("color");
+      expect(sanitizeCmsHtml('<span style="color: transparent;">テキスト</span>')).toContain("color");
+    });
+
+    it("font-size の各単位が許可される (px, em, rem, %, pt)", () => {
+      expect(sanitizeCmsHtml('<span style="font-size: 16px;">テキスト</span>')).toContain("font-size");
+      expect(sanitizeCmsHtml('<span style="font-size: 1.5em;">テキスト</span>')).toContain("font-size");
+      expect(sanitizeCmsHtml('<span style="font-size: 1rem;">テキスト</span>')).toContain("font-size");
+      expect(sanitizeCmsHtml('<span style="font-size: 120%;">テキスト</span>')).toContain("font-size");
+      expect(sanitizeCmsHtml('<span style="font-size: 12pt;">テキスト</span>')).toContain("font-size");
+    });
+
+    it("font-size のキーワードが許可される", () => {
+      expect(sanitizeCmsHtml('<span style="font-size: small;">テキスト</span>')).toContain("font-size");
+      expect(sanitizeCmsHtml('<span style="font-size: large;">テキスト</span>')).toContain("font-size");
+    });
+
+    it("不正な CSS 値 (expression 等) は除去される", () => {
+      const input = '<span style="color: expression(alert(1));">テキスト</span>';
+      const result = sanitizeCmsHtml(input);
+      expect(result).not.toContain("expression");
+    });
+
+    it("不正な font-size 値は除去される", () => {
+      const input = '<span style="font-size: calc(100vh);">テキスト</span>';
+      const result = sanitizeCmsHtml(input);
+      expect(result).not.toContain("font-size");
     });
 
     it("span 以外のタグ（div 等）の style 属性は除去される", () => {
@@ -164,6 +233,12 @@ describe("sanitizeCmsHtml", () => {
       const result = sanitizeCmsHtml(input);
       expect(result).toContain("<ul><li>親項目<ul><li>子項目</li></ul></li></ul>");
     });
+
+    it("番号付きリストの start 属性が許可される", () => {
+      const input = '<ol start="5"><li>手順5</li><li>手順6</li></ol>';
+      const result = sanitizeCmsHtml(input);
+      expect(result).toContain('start="5"');
+    });
   });
 
   // =========================================================================
@@ -201,6 +276,14 @@ describe("sanitizeCmsHtml", () => {
       expect(result).toContain("<th>見出し1</th>");
       expect(result).toContain("<tbody>");
       expect(result).toContain("<td>データ1</td>");
+    });
+
+    it("td / th の colspan, rowspan 属性が許可される", () => {
+      const input =
+        '<table><tbody><tr><td colspan="2">結合セル</td></tr><tr><th rowspan="3">縦結合</th><td>データ</td></tr></tbody></table>';
+      const result = sanitizeCmsHtml(input);
+      expect(result).toContain('colspan="2"');
+      expect(result).toContain('rowspan="3"');
     });
   });
 
@@ -324,6 +407,13 @@ describe("sanitizeCmsHtml", () => {
       expect(result).toContain("<figure>");
       expect(result).toContain('href="https://example.com"');
       expect(result).toContain("</a>");
+    });
+
+    it("loading 属性 (lazy) が許可される", () => {
+      const input =
+        '<img src="https://example.com/img.jpg" alt="写真" loading="lazy" />';
+      const result = sanitizeCmsHtml(input);
+      expect(result).toContain('loading="lazy"');
     });
 
     it("onerror 等のイベントハンドラは除去される", () => {
@@ -502,6 +592,26 @@ describe("sanitizeCmsHtml", () => {
       const result = sanitizeCmsHtml(input);
       expect(result).not.toContain("<object");
       expect(result).not.toContain("<embed");
+    });
+
+    it("CSS url() 関数による外部リソース読み込みが防御される", () => {
+      const input =
+        '<span style="color: url(https://evil.com/track);">テキスト</span>';
+      const result = sanitizeCmsHtml(input);
+      expect(result).not.toContain("url(");
+    });
+
+    it("CSS var() 関数は除去される", () => {
+      const input = '<span style="color: var(--evil);">テキスト</span>';
+      const result = sanitizeCmsHtml(input);
+      expect(result).not.toContain("var(");
+    });
+
+    it("base64 エンコードされた SVG による XSS が防御される", () => {
+      const input =
+        '<img src="data:image/svg+xml;base64,PHN2Zy9vbmxvYWQ9YWxlcnQoMSk+" alt="xss" />';
+      const result = sanitizeCmsHtml(input);
+      expect(result).not.toContain("data:");
     });
   });
 

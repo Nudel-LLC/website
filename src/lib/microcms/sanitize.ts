@@ -22,6 +22,9 @@ const ALLOWED_TAGS = [
   "strong",
   "em",
   "s",
+  "u",
+  "sub",
+  "sup",
   "span",
   // リスト
   "ul",
@@ -50,10 +53,13 @@ const ALLOWED_TAGS = [
 /** microCMS リッチテキストフィールドの許可属性 */
 const ALLOWED_ATTRIBUTES: sanitizeHtml.IOptions["allowedAttributes"] = {
   a: ["href", "target", "rel", "data-embed-type"],
-  img: ["src", "alt", "width", "height"],
+  img: ["src", "alt", "width", "height", "loading"],
   span: ["style"],
   p: ["style"],
   div: ["data-filename"],
+  ol: ["start"],
+  td: ["colspan", "rowspan"],
+  th: ["colspan", "rowspan"],
   iframe: [
     "src",
     "width",
@@ -68,15 +74,34 @@ const ALLOWED_ATTRIBUTES: sanitizeHtml.IOptions["allowedAttributes"] = {
 };
 
 /**
+ * CSS カラー値にマッチするパターン
+ * - キーワード (red, blue 等)
+ * - HEX (#fff, #ff0000, #ff000080)
+ * - rgb/rgba 関数
+ * - hsl/hsla 関数
+ * - transparent, currentColor, inherit
+ */
+const CSS_COLOR_PATTERN =
+  /^(#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|rgba?\(.+\)|hsla?\(.+\)|[a-zA-Z]+)$/;
+
+/**
+ * CSS font-size 値にマッチするパターン
+ * - 数値 + 単位 (px, em, rem, %, pt, vw, vh)
+ * - キーワード (small, medium, large 等)
+ */
+const CSS_FONT_SIZE_PATTERN =
+  /^(\d+(\.\d+)?(px|em|rem|%|pt|vw|vh)|xx-small|x-small|small|medium|large|x-large|xx-large|smaller|larger)$/;
+
+/**
  * 許可する CSS プロパティ（style 属性の中身を制限）
  * span: 文字色・背景色・文字サイズ
  * p: テキスト配置
  */
 const ALLOWED_STYLES: sanitizeHtml.IOptions["allowedStyles"] = {
   span: {
-    color: [/.+/],
-    "background-color": [/.+/],
-    "font-size": [/.+/],
+    color: [CSS_COLOR_PATTERN],
+    "background-color": [CSS_COLOR_PATTERN],
+    "font-size": [CSS_FONT_SIZE_PATTERN],
   },
   p: {
     "text-align": [/^(left|center|right|justify)$/],

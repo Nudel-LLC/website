@@ -26,10 +26,10 @@ test.describe("Home page sections", () => {
     test("displays all four service names", async ({ page }) => {
       const services = page.locator("#services");
 
-      await expect(services.getByText("VIDEO PRODUCTION")).toBeVisible();
-      await expect(services.getByText("INTERVIEW & WRITING")).toBeVisible();
-      await expect(services.getByText("MC & NARRATION")).toBeVisible();
-      await expect(services.getByText("WEB SERVICES & SOCIAL MEDIA")).toBeVisible();
+      await expect(services.getByText(/video production/i)).toBeVisible();
+      await expect(services.getByText(/interview & writing/i)).toBeVisible();
+      await expect(services.getByText(/mc & narration/i)).toBeVisible();
+      await expect(services.getByText(/web services & social media/i)).toBeVisible();
     });
   });
 

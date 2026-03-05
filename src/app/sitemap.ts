@@ -1,12 +1,13 @@
 import type { MetadataRoute } from "next";
-import { getServices } from "@/lib/microcms/client";
+import { getServices, isMicroCMSAvailable } from "@/lib/microcms/client";
 import type { Service } from "@/lib/microcms/types";
 
 const siteUrl = process.env.SITE_URL ?? "https://nudel.co.jp";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let servicePages: MetadataRoute.Sitemap = [];
-  try {
+
+  if (isMicroCMSAvailable()) {
     const { contents: services } = await getServices();
     servicePages = services.map((service: Service) => ({
       url: `${siteUrl}/services/${service.slug}`,
@@ -14,8 +15,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.8,
     }));
-  } catch {
-    // ビルド時にAPIが利用できない場合はサービスページをスキップ
   }
 
   return [

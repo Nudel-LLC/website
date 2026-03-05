@@ -94,6 +94,51 @@ docs/                      # プロジェクトドキュメント
 - **semver タグ** (`X.Y.Z`, `v` プレフィックスなし) → 本番デプロイ
 - PRは CI (lint, typecheck, test) が通ってからマージ
 
+## npm audit 脆弱性対応
+
+`npm audit` が失敗した場合の対応手順:
+
+### 1. 状況確認
+
+```bash
+npm audit          # 脆弱性の一覧を確認
+npm audit fix --dry-run  # 自動修正の影響範囲を確認（実際には変更しない）
+```
+
+### 2. 対応方針
+
+**原則: overrides は必要最小限にする。**
+
+まず overrides なしで `npm install` → `npm audit` を実行し、親パッケージのバージョンアップで自然に解消されるか確認する。解消されない場合のみ `package.json` の `overrides` に追加する。
+
+```bash
+# overridesを一時的に外して試す
+npm install && npm audit
+```
+
+### 3. overrides の書き方
+
+トランジティブ依存のバージョンを強制的に上書きする場合:
+
+```json
+"overrides": {
+  "パッケージ名": "固定バージョン"
+}
+```
+
+- バージョンは `npm view <パッケージ名> version` で最新を確認する
+- 入れ子（`"親": { "子": "..." }`）は機能しないことがあるためトップレベルで指定する
+- 現在の overrides: `fast-xml-parser` のみ（`@aws-sdk/xml-builder` が古い版を要求するため）
+
+### 4. 確認・完了
+
+```bash
+npm audit           # 0 vulnerabilities を確認
+npm run test        # テストが通ることを確認
+```
+
+確認後、コミット・プッシュして PR を作成する。
+
 ## Testing Strategy
 
 - **ユニットテスト (Vitest)**: ロジック・コンポーネントの単体テスト。jsdom 環境で実行

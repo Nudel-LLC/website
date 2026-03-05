@@ -89,13 +89,16 @@ jobs:
         id: deploy
         run: |
           WORKER_NAME="nudel-website-pr-${{ github.event.pull_request.number }}"
-          npm run deploy:preview -- --name "$WORKER_NAME"
-          echo "url=https://${WORKER_NAME}.workers.dev" >> "$GITHUB_OUTPUT"
+          PREVIEW_URL="https://${WORKER_NAME}.workers.dev"
+          npm run deploy:preview -- --name "$WORKER_NAME" --var "SITE_URL:${PREVIEW_URL}"
+          echo '{"MICROCMS_API_KEY":"'"$MICROCMS_API_KEY"'","RESEND_API_KEY":"'"$RESEND_API_KEY"'"}' | npx wrangler secret bulk --name "$WORKER_NAME"
+          echo "url=${PREVIEW_URL}" >> "$GITHUB_OUTPUT"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
           MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
       - name: Comment preview URL
         uses: marocchino/sticky-pull-request-comment@v2
         with:

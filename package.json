@@ -48,12 +48,10 @@
     "zod": "^4.3.6"
   },
   "overrides": {
-    "fast-xml-parser": "5.3.6",
-    "@node-minify/core": {
-      "glob": {
-        "minimatch": "10.2.2"
-      }
-    }
+    "fast-xml-parser": "5.4.2",
+    "hono": "4.12.5",
+    "@hono/node-server": "1.19.11",
+    "minimatch": "10.2.4"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.4",

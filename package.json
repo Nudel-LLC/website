@@ -48,7 +48,8 @@
     "zod": "^4.3.6"
   },
   "overrides": {
-    "fast-xml-parser": "5.4.2"
+    "fast-xml-parser": "5.4.2",
+    "express-rate-limit": "8.3.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.5",

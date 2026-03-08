@@ -23,13 +23,14 @@ test.describe("Home page sections", () => {
   });
 
   test.describe("Services", () => {
-    test("displays all four service names", async ({ page }) => {
+    test("displays service cards", async ({ page }) => {
       const services = page.locator("#services");
 
-      await expect(services.getByText("VIDEO PRODUCTION")).toBeVisible();
-      await expect(services.getByText("INTERVIEW & WRITING")).toBeVisible();
-      await expect(services.getByText("MC & NARRATION")).toBeVisible();
-      await expect(services.getByText("WEB SERVICES & SOCIAL MEDIA")).toBeVisible();
+      // サービスカードが1件以上表示されていることを確認（CMS内容に依存しない）
+      const cards = services.locator("a[href^='/services/']");
+      await expect(cards.first()).toBeVisible();
+      const count = await cards.count();
+      expect(count).toBeGreaterThan(0);
     });
   });
 

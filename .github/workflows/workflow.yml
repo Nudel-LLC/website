@@ -70,6 +70,57 @@ jobs:
           MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
           MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
 
+  deploy-preview:
+    name: Deploy PR Preview
+    needs: [build]
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    environment: preview
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Deploy preview
+        id: deploy
+        run: |
+          WORKER_NAME="nudel-website-pr-${{ github.event.pull_request.number }}"
+          SECRETS_JSON='{"MICROCMS_API_KEY":"'"$MICROCMS_API_KEY"'","RESEND_API_KEY":"'"$RESEND_API_KEY"'"}'
+
+          # アカウントのサブドメインを取得してプレビューURLを構築
+          SUBDOMAIN=$(curl -sf -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/subdomain" \
+            | jq -r '.result.subdomain')
+          PREVIEW_URL="https://${WORKER_NAME}.${SUBDOMAIN}.workers.dev"
+
+          # シークレットを先に登録（Worker 未作成の場合は先にデプロイして作成）
+          if ! echo "$SECRETS_JSON" | npx wrangler secret bulk --name "$WORKER_NAME" 2>/dev/null; then
+            echo "Worker が未作成のため、先にデプロイして作成します..."
+            npm run deploy:preview -- --name "$WORKER_NAME" --var "SITE_URL:${PREVIEW_URL}"
+            echo "$SECRETS_JSON" | npx wrangler secret bulk --name "$WORKER_NAME"
+          fi
+
+          # シークレット登録済みの状態でデプロイ
+          npm run deploy:preview -- --name "$WORKER_NAME" --var "SITE_URL:${PREVIEW_URL}"
+          echo "url=${PREVIEW_URL}" >> "$GITHUB_OUTPUT"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
+          MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+      - name: Comment preview URL
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: preview-url
+          message: |
+            🚀 **PR プレビュー環境にデプロイしました**
+            ${{ steps.deploy.outputs.url }}
+
   deploy-alpha:
     name: Deploy to Alpha
     needs: [build]

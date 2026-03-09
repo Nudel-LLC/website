@@ -35,6 +35,7 @@ npm run test:coverage  # テスト + カバレッジ
 npm run e2e            # Playwright E2Eテスト
 npm run e2e:smoke      # スモークテストのみ
 npm run preview        # Cloudflare ローカルプレビュー (alpha設定)
+npm run deploy:preview # PR プレビューデプロイ (CI用)
 npm run deploy:alpha   # Alpha デプロイ
 npm run deploy:prod    # 本番デプロイ
 ```
@@ -90,7 +91,8 @@ docs/                      # プロジェクトドキュメント
 ## Branching & Deploy Strategy
 
 - **ブランチ命名**: `feat/`, `fix/`, `docs/` 等のプレフィックス
-- **main マージ** → alpha 環境に自動デプロイ → E2E テスト自動実行
+- **PR 作成/更新** → preview 環境に自動デプロイ（`nudel-website-pr-{N}.workers.dev`）
+- **main マージ** → alpha 環境に自動デプロイ → E2E テスト自動実行（preview Worker は自動削除）
 - **semver タグ** (`X.Y.Z`, `v` プレフィックスなし) → 本番デプロイ
 - PRは CI (lint, typecheck, test) が通ってからマージ
 

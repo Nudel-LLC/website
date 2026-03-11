@@ -1,9 +1,0 @@
-{
-  "description": "@opennextjs/cloudflare の推移的依存による脆弱性。上流の修正待ちのため一時的に除外。",
-  "expiry": "2026-06-01",
-  "exclusions": [
-    "GHSA-7r86-cg39-jmmj",
-    "GHSA-23c5-xmqv-rm74",
-    "GHSA-fj3w-jwp8-x2g3"
-  ]
-}

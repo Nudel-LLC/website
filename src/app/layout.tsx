@@ -1,46 +1,33 @@
 import type { Metadata } from "next";
-import { outfit, playfairDisplay, notoSansJP, syncopate } from "@/lib/fonts";
+import { outfit, notoSansJP } from "@/lib/fonts";
+import { SITE_CONFIG } from "@/lib/constants";
 import { TRPCProvider } from "@/components/providers/trpc-provider";
 import "./globals.css";
 
-const siteUrl = process.env.SITE_URL ?? "https://nudel.co.jp";
-const isProduction = siteUrl === "https://nudel.co.jp";
+const siteUrl = process.env.SITE_URL ?? SITE_CONFIG.url;
+const isProduction = siteUrl === SITE_CONFIG.url;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Nudel LLC | ご縁を力に、価値を形に。",
-  description:
-    "ご縁を力に、価値を形に。企画から実行までを一気通貫で行うクリエイティブカンパニー。動画制作、ライティング、MC・ナレーション、Web・SNS運用を提供します。",
+  // TODO: サイトのタイトル・説明文を変更してください
+  title: SITE_CONFIG.name,
+  description: SITE_CONFIG.description,
   openGraph: {
-    title: "Nudel LLC | ご縁を力に、価値を形に。",
-    description:
-      "企画から実行までを一気通貫で行うクリエイティブカンパニー。",
+    title: SITE_CONFIG.name,
+    description: SITE_CONFIG.description,
     type: "website",
     locale: "ja_JP",
-    siteName: "Nudel LLC",
+    siteName: SITE_CONFIG.name,
     url: siteUrl,
-    images: [
-      {
-        url: "/images/logo.png",
-        width: 500,
-        height: 500,
-        alt: "Nudel LLC",
-      },
-    ],
   },
   twitter: {
     card: "summary",
-    title: "Nudel LLC | ご縁を力に、価値を形に。",
-    description:
-      "企画から実行までを一気通貫で行うクリエイティブカンパニー。",
-    images: ["/images/logo.png"],
+    title: SITE_CONFIG.name,
+    description: SITE_CONFIG.description,
   },
   ...(!isProduction && {
     robots: { index: false, follow: false },
   }),
-  verification: {
-    google: "fbNoy5IZq8GHpe_WjSVHgJXMBHVEtGSuPD9Cvmcqon8",
-  },
   alternates: {
     canonical: "/",
   },
@@ -49,17 +36,11 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Nudel LLC",
-  alternateName: "Nudel合同会社",
-  description:
-    "企画から実行までを一気通貫で行うクリエイティブカンパニー。",
-  url: "https://nudel.co.jp",
-  email: "info@nudel.co.jp",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Tokyo",
-    addressCountry: "JP",
-  },
+  // TODO: 組織情報を変更してください
+  name: SITE_CONFIG.name,
+  description: SITE_CONFIG.description,
+  url: SITE_CONFIG.url,
+  email: SITE_CONFIG.email,
 };
 
 export default function RootLayout({
@@ -76,7 +57,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${outfit.variable} ${playfairDisplay.variable} ${notoSansJP.variable} ${syncopate.variable} antialiased`}
+        className={`${outfit.variable} ${notoSansJP.variable} antialiased`}
       >
         <TRPCProvider>{children}</TRPCProvider>
       </body>

@@ -1,3 +1,5 @@
+import { SITE_CONFIG } from "@/lib/constants";
+
 export interface ContactFormData {
   name: string;
   email: string;
@@ -13,7 +15,7 @@ export function escapeHtml(str: string): string {
     .replace(/'/g, "&#39;");
 }
 
-const BRAND_COLOR = "#f97316";
+const BRAND_COLOR = "#111827";
 
 function baseLayout(content: string): string {
   return `<!DOCTYPE html>
@@ -24,13 +26,13 @@ function baseLayout(content: string): string {
     <tr><td align="center">
       <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:8px;overflow:hidden;">
         <tr><td style="background:${BRAND_COLOR};padding:24px 32px;">
-          <span style="color:#ffffff;font-size:20px;font-weight:bold;">Nudel</span>
+          <span style="color:#ffffff;font-size:20px;font-weight:bold;">${escapeHtml(SITE_CONFIG.name)}</span>
         </td></tr>
         <tr><td style="padding:32px;">
           ${content}
         </td></tr>
         <tr><td style="padding:16px 32px;background:#f9fafb;color:#6b7280;font-size:12px;text-align:center;">
-          &copy; Nudel合同会社
+          &copy; ${escapeHtml(SITE_CONFIG.name)}
         </td></tr>
       </table>
     </td></tr>
@@ -64,7 +66,7 @@ export function buildAdminNotificationEmail(data: ContactFormData) {
   `);
 
   return {
-    subject: `[Nudel] お問い合わせ: ${data.name} 様`,
+    subject: `[${SITE_CONFIG.name}] お問い合わせ: ${data.name} 様`,
     html,
   };
 }
@@ -89,7 +91,7 @@ export function buildAutoReplyEmail(data: ContactFormData) {
   `);
 
   return {
-    subject: "[Nudel] お問い合わせありがとうございます",
+    subject: `[${SITE_CONFIG.name}] お問い合わせありがとうございます`,
     html,
   };
 }

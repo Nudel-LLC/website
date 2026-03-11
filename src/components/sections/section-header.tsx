@@ -3,26 +3,15 @@
 import { motion } from "motion/react";
 
 type SectionHeaderProps = {
-  /** バッジに表示するラベル（例: "What We Do"） */
   badge: string;
-  /** タイトルの前半（セリフ体イタリック部分、例: "OUR"） */
-  titleItalic: string;
-  /** タイトルの後半（オレンジのサンセリフ体部分、例: "SOLUTIONS"） */
-  titleAccent: string;
-  /** タイトル下の説明文（省略可能、JSX 可） */
+  title: string;
   description?: React.ReactNode;
-  /** ラッパー div に付与する追加クラス（例: "mb-20" / "mb-28"） */
   className?: string;
 };
 
-/**
- * 各ページセクションで共通使用するヘッダーコンポーネント。
- * バッジ・タイトル・説明文をフェードインアニメーション付きで表示する。
- */
 export function SectionHeader({
   badge,
-  titleItalic,
-  titleAccent,
+  title,
   description,
   className = "mb-20",
 }: SectionHeaderProps) {
@@ -32,7 +21,7 @@ export function SectionHeader({
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="inline-block px-5 py-2 mb-8 text-[11px] font-black tracking-widest text-orange-600 uppercase border border-orange-200 rounded-full"
+        className="inline-block px-5 py-2 mb-8 text-[11px] font-black tracking-widest text-gray-600 uppercase border border-gray-200 rounded-full"
       >
         {badge}
       </motion.div>
@@ -41,12 +30,9 @@ export function SectionHeader({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.1 }}
-        className="text-4xl md:text-7xl font-black mb-10 tracking-tighter uppercase font-serif italic text-gray-900"
+        className="text-4xl md:text-7xl font-black mb-10 tracking-tighter uppercase text-gray-900"
       >
-        {titleItalic}{" "}
-        <span className="text-orange-500 not-italic font-sans">
-          {titleAccent}
-        </span>
+        {title}
       </motion.h2>
       {description && (
         <motion.p

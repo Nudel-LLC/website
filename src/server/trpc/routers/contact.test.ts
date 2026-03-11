@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { appRouter } from "../index";
 
-vi.stubEnv("CONTACT_EMAIL_TO", "info@nudel.co.jp");
+vi.stubEnv("CONTACT_EMAIL_TO", "info@example.com");
 
 const mockSend = vi.fn();
 
@@ -51,11 +51,11 @@ describe("contact.submit", () => {
     });
 
     const adminCall = mockSend.mock.calls.find(
-      (call: unknown[]) => (call[0] as { to: string }).to === "info@nudel.co.jp",
+      (call: unknown[]) => (call[0] as { to: string }).to === "info@example.com",
     );
     expect(adminCall).toBeDefined();
     expect(adminCall![0]).toMatchObject({
-      to: "info@nudel.co.jp",
+      to: "info@example.com",
       replyTo: "test@example.com",
     });
   });

@@ -1,22 +1,9 @@
 import type { MetadataRoute } from "next";
-import { getServices, isMicroCMSAvailable } from "@/lib/microcms/client";
-import type { Service } from "@/lib/microcms/types";
+import { SITE_CONFIG } from "@/lib/constants";
 
-const siteUrl = process.env.SITE_URL ?? "https://nudel.co.jp";
+const siteUrl = process.env.SITE_URL ?? SITE_CONFIG.url;
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  let servicePages: MetadataRoute.Sitemap = [];
-
-  if (isMicroCMSAvailable()) {
-    const { contents: services } = await getServices();
-    servicePages = services.map((service: Service) => ({
-      url: `${siteUrl}/services/${service.slug}`,
-      lastModified: new Date(service.updatedAt),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    }));
-  }
-
+export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: siteUrl,
@@ -24,6 +11,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 1,
     },
-    ...servicePages,
   ];
 }

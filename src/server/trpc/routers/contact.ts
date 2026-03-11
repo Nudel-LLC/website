@@ -7,8 +7,10 @@ import {
   buildAutoReplyEmail,
 } from "@/lib/email/templates";
 import { logger } from "@/lib/logger";
+import { SITE_CONFIG } from "@/lib/constants";
 
-const SENDER = "Nudel <noreply@nudel.co.jp>";
+// TODO: 送信元メールアドレスを変更してください
+const SENDER = `${SITE_CONFIG.name} <noreply@${new URL(SITE_CONFIG.url).hostname}>`;
 
 const contactInputSchema = z.object({
   name: z.string().min(1, "お名前を入力してください"),

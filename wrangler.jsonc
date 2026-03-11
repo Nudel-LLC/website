@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "nudel-website",
+  // TODO: プロジェクト名に変更してください
+  "name": "my-app",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-02-21",
   "compatibility_flags": ["nodejs_compat"],
@@ -25,25 +26,34 @@
   },
   "env": {
     "alpha": {
-      "name": "nudel-website-alpha",
+      // TODO: プロジェクト名に変更してください
+      "name": "my-app-alpha",
       "vars": {
+        // TODO: お問い合わせメール送信先を設定してください
         "CONTACT_EMAIL_TO": "delivered@resend.dev",
-        "SITE_URL": "https://alpha.nudel.co.jp",
-        "MICROCMS_SERVICE_DOMAIN": "nudel-website"
+        // TODO: サイト URL を設定してください
+        "SITE_URL": "https://alpha.example.com",
+        // TODO: microCMS サービスドメインを設定してください
+        "MICROCMS_SERVICE_DOMAIN": "your-service-domain"
       },
       "routes": [
-        { "pattern": "alpha.nudel.co.jp", "custom_domain": true }
+        // TODO: カスタムドメインを設定してください
+        // { "pattern": "alpha.example.com", "custom_domain": true }
       ],
       "images": {
         "binding": "IMAGES"
       }
     },
     "prod": {
-      "name": "nudel-website",
+      // TODO: プロジェクト名に変更してください
+      "name": "my-app",
       "vars": {
-        "CONTACT_EMAIL_TO": "info@nudel.co.jp",
-        "SITE_URL": "https://nudel.co.jp",
-        "MICROCMS_SERVICE_DOMAIN": "nudel-website"
+        // TODO: お問い合わせメール送信先を設定してください
+        "CONTACT_EMAIL_TO": "info@example.com",
+        // TODO: サイト URL を設定してください
+        "SITE_URL": "https://example.com",
+        // TODO: microCMS サービスドメインを設定してください
+        "MICROCMS_SERVICE_DOMAIN": "your-service-domain"
       },
       "images": {
         "binding": "IMAGES"

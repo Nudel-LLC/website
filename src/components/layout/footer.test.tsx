@@ -12,13 +12,13 @@ describe("Footer", () => {
 
   it("メールアドレスが表示される", () => {
     render(<Footer />);
-    expect(screen.getByText("info@nudel.co.jp")).toBeInTheDocument();
+    expect(screen.getByText("info@example.com")).toBeInTheDocument();
   });
 
   it("コピーライトが表示される", () => {
     render(<Footer />);
     expect(
-      screen.getByText(/© 2026 Nudel LLC\. All Rights Reserved\./),
+      screen.getByText(/My App\. All Rights Reserved\./),
     ).toBeInTheDocument();
   });
 });

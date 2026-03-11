@@ -30,7 +30,7 @@ describe("escapeHtml", () => {
 describe("buildAdminNotificationEmail", () => {
   it("件名にお客様名を含む", () => {
     const { subject } = buildAdminNotificationEmail(sampleData);
-    expect(subject).toBe("[Nudel] お問い合わせ: テスト太郎 様");
+    expect(subject).toContain("テスト太郎");
   });
 
   it("本文にお問い合わせ内容を含む", () => {
@@ -63,7 +63,7 @@ describe("buildAdminNotificationEmail", () => {
 describe("buildAutoReplyEmail", () => {
   it("固定の件名を返す", () => {
     const { subject } = buildAutoReplyEmail(sampleData);
-    expect(subject).toBe("[Nudel] お問い合わせありがとうございます");
+    expect(subject).toContain("お問い合わせありがとうございます");
   });
 
   it("本文にお客様名とメッセージ控えを含む", () => {

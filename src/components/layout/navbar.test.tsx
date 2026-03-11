@@ -4,27 +4,15 @@ import userEvent from "@testing-library/user-event";
 import { Navbar } from "./navbar";
 
 describe("Navbar", () => {
-  it("ロゴ（Nudel LLC）が表示される", () => {
+  it("サイト名が表示される", () => {
     render(<Navbar />);
-    expect(screen.getByText("LLC")).toBeInTheDocument();
+    expect(screen.getByText("My App")).toBeInTheDocument();
   });
 
   it("ナビゲーション項目が表示される", () => {
     render(<Navbar />);
-    expect(screen.getAllByText("Concept").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("Strength").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("Services").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("Company").length).toBeGreaterThan(0);
-  });
-
-  it("Contact リンクが /#contact を指す", () => {
-    render(<Navbar />);
-    const contactLinks = screen
-      .getAllByText(/contact/i)
-      .filter(
-        (el) => el.tagName === "A" && el.getAttribute("href") === "/#contact",
-      );
-    expect(contactLinks.length).toBeGreaterThan(0);
+    expect(screen.getAllByText("About").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Contact").length).toBeGreaterThan(0);
   });
 
   it("モバイルトグルボタンが存在する", () => {

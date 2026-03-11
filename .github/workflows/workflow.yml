@@ -103,10 +103,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install chromium --with-deps
+      # TODO: Alpha URL を変更してください
       - name: Wait for deployment
         run: |
           for i in $(seq 1 30); do
-            if curl -sf https://alpha.nudel.co.jp > /dev/null 2>&1; then
+            if curl -sf ${{ vars.ALPHA_URL || 'https://alpha.example.com' }} > /dev/null 2>&1; then
               echo "Alpha is ready"
               exit 0
             fi
@@ -118,7 +119,7 @@ jobs:
       - name: Run E2E tests
         run: npx playwright test --ignore-snapshots --project=chromium
         env:
-          PLAYWRIGHT_BASE_URL: https://alpha.nudel.co.jp
+          PLAYWRIGHT_BASE_URL: ${{ vars.ALPHA_URL || 'https://alpha.example.com' }}
       - uses: actions/upload-artifact@v7
         if: always()
         with:

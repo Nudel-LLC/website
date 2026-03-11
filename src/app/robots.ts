@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
+import { SITE_CONFIG } from "@/lib/constants";
 
-const siteUrl = process.env.SITE_URL ?? "https://nudel.co.jp";
-const isProduction = siteUrl === "https://nudel.co.jp";
+const siteUrl = process.env.SITE_URL ?? SITE_CONFIG.url;
+const isProduction = siteUrl === SITE_CONFIG.url;
 
 export default function robots(): MetadataRoute.Robots {
   if (!isProduction) {

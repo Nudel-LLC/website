@@ -25,13 +25,13 @@ export function ContactFormCard() {
   };
 
   return (
-    <div className="sticky top-32 p-12 bg-white rounded-[40px] border border-orange-100 shadow-[0_40px_100px_rgba(255,107,0,0.08)]">
+    <div className="sticky top-32 p-12 bg-white rounded-[40px] border border-gray-100 shadow-lg">
       <div className="flex items-center gap-4 mb-8">
-        <div className="w-12 h-12 bg-orange-500 rounded-2xl flex items-center justify-center shadow-lg shadow-orange-200">
+        <div className="w-12 h-12 bg-gray-900 rounded-2xl flex items-center justify-center">
           <MessageCircle size={24} className="text-white" />
         </div>
         <div>
-          <h3 className="text-2xl font-black tracking-tighter uppercase italic text-gray-900">
+          <h3 className="text-2xl font-black tracking-tighter uppercase text-gray-900">
             Let&apos;s Talk
           </h3>
           <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">
@@ -63,7 +63,7 @@ export function ContactFormCard() {
                 setFormData({ ...formData, name: e.target.value })
               }
               required
-              className="w-full bg-orange-50/50 border-b-2 border-orange-100 px-0 py-4 text-gray-900 placeholder:text-gray-300 focus:border-orange-500 outline-none transition-all font-bold"
+              className="w-full bg-gray-50 border-b-2 border-gray-100 px-0 py-4 text-gray-900 placeholder:text-gray-300 focus:border-gray-900 outline-none transition-all font-bold"
             />
           </div>
           <div>
@@ -78,7 +78,7 @@ export function ContactFormCard() {
                 setFormData({ ...formData, email: e.target.value })
               }
               required
-              className="w-full bg-orange-50/50 border-b-2 border-orange-100 px-0 py-4 text-gray-900 placeholder:text-gray-300 focus:border-orange-500 outline-none transition-all font-bold"
+              className="w-full bg-gray-50 border-b-2 border-gray-100 px-0 py-4 text-gray-900 placeholder:text-gray-300 focus:border-gray-900 outline-none transition-all font-bold"
             />
           </div>
           <div>
@@ -93,13 +93,13 @@ export function ContactFormCard() {
                 setFormData({ ...formData, message: e.target.value })
               }
               required
-              className="w-full bg-orange-50/50 border-b-2 border-orange-100 px-0 py-4 text-gray-900 placeholder:text-gray-300 focus:border-orange-500 outline-none transition-all font-bold resize-none"
+              className="w-full bg-gray-50 border-b-2 border-gray-100 px-0 py-4 text-gray-900 placeholder:text-gray-300 focus:border-gray-900 outline-none transition-all font-bold resize-none"
             />
           </div>
           <button
             type="submit"
             disabled={mutation.isPending}
-            className="w-full py-5 bg-orange-500 text-white font-black uppercase tracking-widest italic rounded-2xl shadow-lg shadow-orange-200 hover:bg-orange-600 hover:scale-[1.02] transition-all flex items-center justify-center gap-3 group disabled:opacity-50"
+            className="w-full py-5 bg-gray-900 text-white font-black uppercase tracking-widest rounded-2xl hover:bg-gray-800 hover:scale-[1.02] transition-all flex items-center justify-center gap-3 group disabled:opacity-50"
           >
             {mutation.isPending ? "Sending..." : "Send Inquiry"}
             <ArrowRight

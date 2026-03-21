@@ -6,12 +6,14 @@ import { Navbar } from "./navbar";
 describe("Navbar", () => {
   it("サイト名が表示される", () => {
     render(<Navbar />);
-    expect(screen.getByText("My App")).toBeInTheDocument();
+    expect(screen.getByText("Nudel")).toBeInTheDocument();
   });
 
   it("ナビゲーション項目が表示される", () => {
     render(<Navbar />);
-    expect(screen.getAllByText("About").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Concept").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Strength").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Services").length).toBeGreaterThan(0);
     expect(screen.getAllByText("Contact").length).toBeGreaterThan(0);
   });
 

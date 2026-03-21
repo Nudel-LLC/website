@@ -7,18 +7,17 @@ describe("Footer", () => {
     render(<Footer />);
     expect(screen.getByText("Twitter (X)")).toBeInTheDocument();
     expect(screen.getByText("Instagram")).toBeInTheDocument();
-    expect(screen.getByText("LinkedIn")).toBeInTheDocument();
   });
 
   it("メールアドレスが表示される", () => {
     render(<Footer />);
-    expect(screen.getByText("info@example.com")).toBeInTheDocument();
+    expect(screen.getByText("info@nudel.co.jp")).toBeInTheDocument();
   });
 
   it("コピーライトが表示される", () => {
     render(<Footer />);
     expect(
-      screen.getByText(/My App\. All Rights Reserved\./),
+      screen.getByText(/Nudel LLC\. All Rights Reserved\./),
     ).toBeInTheDocument();
   });
 });

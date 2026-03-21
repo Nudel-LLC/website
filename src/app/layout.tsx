@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { outfit, notoSansJP } from "@/lib/fonts";
+import { outfit, notoSansJP, notoSerifJP } from "@/lib/fonts";
 import { SITE_CONFIG } from "@/lib/constants";
 import { TRPCProvider } from "@/components/providers/trpc-provider";
 import "./globals.css";
@@ -57,7 +57,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${outfit.variable} ${notoSansJP.variable} antialiased`}
+        className={`${outfit.variable} ${notoSansJP.variable} ${notoSerifJP.variable} antialiased`}
       >
         <TRPCProvider>{children}</TRPCProvider>
       </body>

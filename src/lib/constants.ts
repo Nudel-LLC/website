@@ -23,21 +23,26 @@ export const FOUNDER = {
 } as const;
 
 export const COMPANY_INFO = [
-  { label: "Company Name", value: "Nudel合同会社" },
-  { label: "Location", value: "TOKYO, JP" },
-  { label: "Slogan", value: "ご縁を力に、\n価値を形に" },
+  { label: "会社名", value: "合同会社Nudel" },
+  { label: "所在地", value: "TOKYO, JP" },
+  { label: "代表", value: "岡崎 美玖" },
 ] as const;
 
 export const SOCIAL_LINKS = [
-  { name: "Twitter (X)", href: "#" },
-  { name: "Instagram", href: "#" },
-  { name: "LinkedIn", href: "#" },
+  {
+    name: "Twitter (X)",
+    href: "https://x.com/aaamiku39",
+  },
+  {
+    name: "Instagram",
+    href: "https://www.instagram.com/ramen_miku39_/",
+  },
 ] as const;
 
 export const SITE_CONFIG = {
-  name: "Nudel LLC",
+  name: "Nudel",
   description:
-    "ご縁を力に、価値を形に。企画から実行までを一気通貫で行うクリエイティブカンパニー。動画制作、ライティング、MC・ナレーション、Web・SNS運用を提供します。",
+    "企業や個人の魅力を見つけ形にするクリエイティブパートナー",
   url: "https://nudel.co.jp",
   email: "info@nudel.co.jp",
 } as const;

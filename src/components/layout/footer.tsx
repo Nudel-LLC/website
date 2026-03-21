@@ -8,8 +8,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-16">
           <div className="max-w-md">
             <h3 className="text-4xl font-black tracking-tighter italic mb-8">
-              Nudel{" "}
-              <span className="text-orange-500 font-sans not-italic">LLC</span>
+              Nudel
             </h3>
           </div>
           <div className="flex gap-20">
@@ -22,6 +21,8 @@ export function Footer() {
                   <li key={link.name}>
                     <Link
                       href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="hover:text-orange-500 transition-colors"
                     >
                       {link.name}
@@ -38,7 +39,7 @@ export function Footer() {
                 {SITE_CONFIG.email}
               </p>
               <p className="text-[10px] text-gray-300 font-bold tracking-widest">
-                &copy; 2026 Nudel LLC. All Rights Reserved.
+                &copy; {new Date().getFullYear()} Nudel LLC. All Rights Reserved.
               </p>
             </div>
           </div>

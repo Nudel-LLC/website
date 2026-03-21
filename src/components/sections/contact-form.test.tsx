@@ -37,13 +37,13 @@ describe("ContactFormCard", () => {
     mockMutationState = { isPending: false, isError: false };
   });
 
-  it("フォーム初期状態でplaceholderとSend Inquiryボタンが表示される", () => {
+  it("フォーム初期状態でplaceholderとSENDボタンが表示される", () => {
     render(<ContactFormCard />);
     expect(screen.getByPlaceholderText("YOUR NAME")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("YOUR EMAIL")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("HOW CAN WE HELP?")).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /send inquiry/i }),
+      screen.getByRole("button", { name: /send/i }),
     ).toBeInTheDocument();
   });
 
@@ -70,7 +70,7 @@ describe("ContactFormCard", () => {
       "test@example.com",
     );
     await user.type(screen.getByPlaceholderText("HOW CAN WE HELP?"), "テスト");
-    await user.click(screen.getByRole("button", { name: /send inquiry/i }));
+    await user.click(screen.getByRole("button", { name: /send/i }));
 
     expect(
       screen.getByText("お問い合わせありがとうございます。"),
@@ -86,8 +86,8 @@ describe("ContactFormCard", () => {
     ).toBeInTheDocument();
   });
 
-  it("Let's Talkヘッダーが表示される", () => {
+  it("CONTACTヘッダーが表示される", () => {
     render(<ContactFormCard />);
-    expect(screen.getByText("Let's Talk")).toBeInTheDocument();
+    expect(screen.getByText("CONTACT")).toBeInTheDocument();
   });
 });

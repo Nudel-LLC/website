@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { Sparkles } from "lucide-react";
 import { FOUNDER } from "@/lib/constants";
 import { FadeInView } from "@/components/ui/fade-in-view";
 import { SectionHeader } from "./section-header";
@@ -9,7 +8,7 @@ import { SectionHeader } from "./section-header";
 export function FounderSection() {
   return (
     <section
-      id="founder"
+      id="concept"
       className="py-40 bg-[#fffbf7] relative overflow-hidden"
     >
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-orange-50/60 rounded-full blur-[120px] -ml-48 -mb-48" />
@@ -72,15 +71,6 @@ export function FounderSection() {
                   </div>
                 </div>
               ))}
-            </div>
-
-            <div className="pt-6">
-              <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-orange-50 to-orange-100/50 rounded-2xl border border-orange-200">
-                <Sparkles size={18} className="text-orange-500" />
-                <p className="text-sm font-black text-gray-900 tracking-wider">
-                  人の良さを引き出すクリエイティブへ
-                </p>
-              </div>
             </div>
           </div>
         </FadeInView>

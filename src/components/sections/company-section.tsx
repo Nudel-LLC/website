@@ -10,9 +10,6 @@ export function CompanySection() {
         <div className="grid lg:grid-cols-3 gap-20">
           <div className="lg:col-span-2 space-y-16">
             <div>
-              <div className="inline-block px-4 py-1.5 mb-6 text-[10px] font-black tracking-widest text-orange-600 uppercase bg-orange-50 rounded-lg">
-                About Us
-              </div>
               <h2 className="text-4xl md:text-6xl font-black mb-12 tracking-tighter italic uppercase text-gray-900">
                 COMPANY <span className="text-orange-500">DECK</span>
               </h2>

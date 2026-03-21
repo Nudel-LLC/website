@@ -16,8 +16,7 @@ export function Navbar() {
           href="/"
           className="text-2xl font-black tracking-tighter text-gray-900 font-serif italic"
         >
-          Nudel{" "}
-          <span className="text-orange-500 font-sans not-italic">LLC</span>
+          Nudel
         </Link>
 
         {/* Desktop Nav */}

@@ -1,10 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { Sparkles } from "lucide-react";
+import { motion } from "motion/react";
 import { FOUNDER } from "@/lib/constants";
 import { FadeInView } from "@/components/ui/fade-in-view";
-import { SectionHeader } from "./section-header";
 
 export function FounderSection() {
   return (
@@ -15,12 +14,16 @@ export function FounderSection() {
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-orange-50/60 rounded-full blur-[120px] -ml-48 -mb-48" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <SectionHeader
-          badge="Our Founder"
-          titleItalic="THE"
-          titleAccent="LEADER"
-          className="mb-20"
-        />
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="text-4xl md:text-7xl font-black mb-20 tracking-tighter uppercase font-serif italic text-gray-900 text-center"
+        >
+          THE{" "}
+          <span className="text-orange-500 not-italic font-sans">LEADER</span>
+        </motion.h2>
 
         <FadeInView className="grid lg:grid-cols-2 gap-20 items-center max-w-6xl mx-auto">
           {/* Image Section */}
@@ -74,14 +77,6 @@ export function FounderSection() {
               ))}
             </div>
 
-            <div className="pt-6">
-              <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-orange-50 to-orange-100/50 rounded-2xl border border-orange-200">
-                <Sparkles size={18} className="text-orange-500" />
-                <p className="text-sm font-black text-gray-900 tracking-wider">
-                  人の良さを引き出すクリエイティブへ
-                </p>
-              </div>
-            </div>
           </div>
         </FadeInView>
       </div>

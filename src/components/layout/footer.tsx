@@ -8,8 +8,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-16">
           <div className="max-w-md">
             <h3 className="text-4xl font-black tracking-tighter italic mb-8">
-              Nudel{" "}
-              <span className="text-orange-500 font-sans not-italic">LLC</span>
+              Nudel
             </h3>
           </div>
           <div className="flex gap-20">

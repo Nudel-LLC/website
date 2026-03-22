@@ -7,7 +7,7 @@ test.describe("Contact form", () => {
   });
 
   test("displays form with correct placeholders", async ({ page }) => {
-    await expect(page.getByText("Let's Talk")).toBeVisible();
+    await expect(page.locator("#contact").getByText("CONTACT")).toBeVisible();
     await expect(page.getByPlaceholder("YOUR NAME")).toBeVisible();
     await expect(page.getByPlaceholder("YOUR EMAIL")).toBeVisible();
     await expect(page.getByPlaceholder("HOW CAN WE HELP?")).toBeVisible();
@@ -28,7 +28,7 @@ test.describe("Contact form", () => {
     await page.getByPlaceholder("YOUR EMAIL").fill("delivered@resend.dev");
     await page.getByPlaceholder("HOW CAN WE HELP?").fill("Playwright E2Eテストからの自動送信");
 
-    await page.getByRole("button", { name: /Send Inquiry/i }).click();
+    await page.getByRole("button", { name: /send/i }).click();
 
     await expect(page.getByText("お問い合わせありがとうございます。")).toBeVisible({ timeout: 10000 });
   });
@@ -46,13 +46,13 @@ test.describe("Contact form", () => {
     await page.getByPlaceholder("YOUR EMAIL").fill("test@example.com");
     await page.getByPlaceholder("HOW CAN WE HELP?").fill("テストメッセージ");
 
-    await page.getByRole("button", { name: /Send Inquiry/i }).click();
+    await page.getByRole("button", { name: /send/i }).click();
 
     await expect(page.getByText("送信に失敗しました。もう一度お試しください。")).toBeVisible({ timeout: 10000 });
   });
 
   test("validates required fields", async ({ page }) => {
-    await page.getByRole("button", { name: /Send Inquiry/i }).click();
+    await page.getByRole("button", { name: /send/i }).click();
 
     const nameInput = page.getByPlaceholder("YOUR NAME");
     const isInvalid = await nameInput.evaluate(

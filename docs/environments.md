@@ -4,20 +4,23 @@
 
 | 環境 | Worker名 | URL | トリガー |
 |------|----------|-----|----------|
+| preview | nudel-website-pr-{N} | https://nudel-website-pr-{N}.workers.dev | PR の作成・更新 |
 | alpha | nudel-website-alpha | https://alpha.nudel.co.jp | main ブランチへのマージ |
 | prod | nudel-website | https://nudel.co.jp | semver タグの作成 (`X.Y.Z`) |
 
 ## 運用フロー
 
 ```
-開発ブランチ → PR → main マージ → alpha デプロイ → 動作確認 → タグ作成 → prod デプロイ
+開発ブランチ → PR 作成 → preview デプロイ → レビュー → main マージ → alpha デプロイ → 動作確認 → タグ作成 → prod デプロイ
 ```
 
 1. 開発ブランチで作業し、PR を作成
-2. CI（lint, typecheck, test）が通ったら main にマージ
-3. **alpha** (`alpha.nudel.co.jp`) に自動デプロイされる
-4. alpha で動作確認
-5. semver タグを作成して prod にデプロイ
+2. **preview** (`nudel-website-pr-{PR番号}.workers.dev`) に自動デプロイされ、PR コメントに URL が投稿される
+3. preview 環境でレビュー・動作確認
+4. CI（lint, typecheck, test）が通ったら main にマージ（preview Worker は自動削除される）
+5. **alpha** (`alpha.nudel.co.jp`) に自動デプロイされる
+6. alpha で動作確認
+7. semver タグを作成して prod にデプロイ
 
 ```bash
 git tag 1.0.0
@@ -30,6 +33,7 @@ git push origin 1.0.0
 
 | コマンド | 説明 |
 |----------|------|
+| `npm run deploy:preview` | preview 環境にデプロイ（CI から `--name` 付きで実行） |
 | `npm run deploy:alpha` | alpha 環境にデプロイ |
 | `npm run deploy:prod` | prod 環境にデプロイ |
 | `npm run preview` | alpha 環境設定でローカルプレビュー |
@@ -39,6 +43,7 @@ git push origin 1.0.0
 環境設定は `wrangler.jsonc` の `env` セクションで定義されている。
 共通設定（compatibility_date, flags, assets, observability）は各環境に自動継承される。
 
+- **preview**: PR ごとに `--name nudel-website-pr-{N}` で Worker 名を動的に上書き。`workers.dev` サブドメインで公開される
 - **alpha**: `custom_domain: true` により初回デプロイ時に `alpha.nudel.co.jp` のDNSが自動設定される（Cloudflare管理ドメインが前提）
 - **prod**: 既存の Cloudflare ダッシュボード設定をそのまま使用
 
@@ -75,8 +80,27 @@ Cloudflare Secret として設定するシークレット変数（`wrangler secr
 
 リポジトリの Settings > Environments で以下を設定する:
 
+- **preview**: 保護ルールなし（PR 時に自動デプロイ）
 - **alpha**: 保護ルールなし（自動デプロイ）
 - **prod**: 必要に応じて Required reviewers を設定可能
+
+## PR プレビュー環境
+
+### 仕組み
+
+- PR が作成・更新されると `deploy-preview` ジョブが実行される
+- Worker 名は `nudel-website-pr-{PR番号}` で、`https://nudel-website-pr-{N}.workers.dev` でアクセス可能
+- デプロイ完了後、[marocchino/sticky-pull-request-comment](https://github.com/marocchino/sticky-pull-request-comment) でプレビュー URL が PR にコメントされる（同一コメントが更新される）
+- PR がクローズ（マージ含む）されると `preview-cleanup.yml` ワークフローで Worker が自動削除される
+
+### シークレット
+
+preview 環境はリポジトリレベルの GitHub Secrets をそのまま使用する。フォーク PR からはシークレットにアクセスできない（GitHub のデフォルト保護）。
+
+### 制限事項
+
+- `RESEND_API_KEY` は Cloudflare Secret として各 Worker に個別設定が必要。preview Worker には設定されないため、メール送信は失敗する。メール送信の動作確認は alpha 環境で行うこと
+- `workers.dev` のサブドメインを使用するため、カスタムドメインは設定されない
 
 ## タグの命名規則
 

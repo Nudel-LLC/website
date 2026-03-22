@@ -17,6 +17,7 @@
     "typecheck": "tsc --noEmit",
     "preview": "opennextjs-cloudflare build && wrangler dev --env alpha",
     "deploy:alpha": "opennextjs-cloudflare build && wrangler deploy --env alpha",
+    "deploy:preview": "opennextjs-cloudflare build && wrangler deploy --env preview",
     "deploy:prod": "opennextjs-cloudflare build && wrangler deploy --env prod",
     "e2e": "playwright test",
     "e2e:ui": "playwright test --ui",

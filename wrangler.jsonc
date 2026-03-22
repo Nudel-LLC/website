@@ -38,6 +38,18 @@
         "binding": "IMAGES"
       }
     },
+    "preview": {
+      // name は deploy 時に --name フラグで上書きされる
+      "name": "nudel-website-preview",
+      "vars": {
+        "CONTACT_EMAIL_TO": "delivered@resend.dev",
+        "SITE_URL": "https://nudel-website-preview.workers.dev",
+        "MICROCMS_SERVICE_DOMAIN": "nudel-website"
+      },
+      "images": {
+        "binding": "IMAGES"
+      }
+    },
     "prod": {
       "name": "nudel-website",
       "vars": {

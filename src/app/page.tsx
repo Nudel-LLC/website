@@ -5,10 +5,12 @@ import { StrengthSection } from "@/components/sections/strength-section";
 import { FounderSection } from "@/components/sections/founder-section";
 import { ServicesSection } from "@/components/sections/services-section";
 import { CompanySection } from "@/components/sections/company-section";
-import { getServices } from "@/lib/microcms/client";
+import { getServices, isMicroCMSAvailable } from "@/lib/microcms/client";
 
 export default async function Home() {
-  const { contents: services } = await getServices();
+  const services = isMicroCMSAvailable()
+    ? (await getServices()).contents
+    : [];
 
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-orange-500 selection:text-white antialiased">

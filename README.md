@@ -1,7 +1,6 @@
 # Nudel LLC - Corporate Website
 
 **ご縁を力に、価値を形に。**
-
 [Nudel LLC](https://nudel.co.jp) のコーポレートサイトのソースコードです。
 
 ## 技術スタック

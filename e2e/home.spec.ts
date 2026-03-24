@@ -12,13 +12,15 @@ test.describe("Home page sections", () => {
     });
 
     test("displays CTA buttons with correct links", async ({ page }) => {
-      const ourSolution = page.getByRole("link", { name: "Our Solution" });
+      const main = page.locator("main");
+
+      const ourSolution = main.getByRole("link", { name: "Our Solution" });
       await expect(ourSolution).toBeVisible();
       await expect(ourSolution).toHaveAttribute("href", "#strength");
 
-      const getStarted = page.getByRole("link", { name: "Get Started" });
-      await expect(getStarted).toBeVisible();
-      await expect(getStarted).toHaveAttribute("href", "#contact");
+      const contact = main.getByRole("link", { name: "CONTACT", exact: true });
+      await expect(contact).toBeVisible();
+      await expect(contact).toHaveAttribute("href", "#contact");
     });
   });
 
@@ -35,11 +37,11 @@ test.describe("Home page sections", () => {
   });
 
   test.describe("Company", () => {
-    test("displays company name and location", async ({ page }) => {
+    test("displays company deck section", async ({ page }) => {
       const company = page.locator("#company");
 
-      await expect(company.getByText("Nudel合同会社")).toBeVisible();
-      await expect(company.getByText("TOKYO, JP")).toBeVisible();
+      await expect(company.getByText("COMPANY")).toBeVisible();
+      await expect(company.getByText("DECK")).toBeVisible();
     });
   });
 

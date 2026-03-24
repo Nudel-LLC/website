@@ -3,6 +3,7 @@ import { Footer } from "@/components/layout/footer";
 import { HeroSection } from "@/components/sections/hero-section";
 import { StrengthSection } from "@/components/sections/strength-section";
 import { FounderSection } from "@/components/sections/founder-section";
+import { MemberSection } from "@/components/sections/member-section";
 import { ServicesSection } from "@/components/sections/services-section";
 import { CompanySection } from "@/components/sections/company-section";
 import { getServices, isMicroCMSAvailable } from "@/lib/microcms/client";
@@ -19,6 +20,7 @@ export default async function Home() {
         <HeroSection />
         <StrengthSection />
         <FounderSection />
+        <MemberSection />
         <ServicesSection services={services} />
         <CompanySection />
       </main>

@@ -46,7 +46,7 @@ export function HeroSection() {
               href="#contact"
               className="px-14 py-5 bg-white border border-orange-200 text-orange-600 font-black rounded-full hover:bg-orange-50 transition-all uppercase tracking-widest text-[11px]"
             >
-              Get Started
+              CONTACT
             </Link>
           </div>
         </motion.div>

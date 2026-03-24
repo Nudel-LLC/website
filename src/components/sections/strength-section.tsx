@@ -19,9 +19,6 @@ export function StrengthSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="inline-block px-4 py-1.5 mb-6 text-[10px] font-black tracking-widest text-orange-600 uppercase bg-orange-50 rounded-lg">
-              The Power of Integration
-            </div>
             <h2 className="text-4xl md:text-6xl font-black mb-10 leading-tight tracking-tighter uppercase font-serif italic">
               バラバラを、
               <br />

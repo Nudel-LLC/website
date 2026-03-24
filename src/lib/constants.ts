@@ -13,7 +13,7 @@ export const FOUNDER = {
   bio: [
     {
       year: "2020年4月",
-      text: "立教大学社会学部卒業後に新卒で株式会社ファーストリテイリングに入社。「PLST」事業へ配属。通常店舗でのセールス売り上げ全国1位(単日)や、ラーメンのインフルエンサー活動が注目され、広報・マーケ部門へ異例の昇進。",
+      text: "立教大学社会学部卒業後に新卒で株式会社ファーストリテイリングに入社。「PLST」事業へ配属。通常店舗でのセールス上げ全国1位(単日)や、ラーメンのインフルエンサー活動が注目され、広報・マーケ部門へ異例の昇進。",
     },
     {
       year: "2025年10月",
@@ -22,16 +22,39 @@ export const FOUNDER = {
   ],
 } as const;
 
-export const COMPANY_INFO = [
-  { label: "Company Name", value: "Nudel合同会社" },
-  { label: "Location", value: "TOKYO, JP" },
-  { label: "Slogan", value: "ご縁を力に、\n価値を形に" },
+export const SOCIAL_LINKS = [
+  { name: "Twitter (X)", href: "https://x.com/aaamiku39" },
+  { name: "Instagram", href: "https://www.instagram.com/ramen_miku39_/" },
 ] as const;
 
-export const SOCIAL_LINKS = [
-  { name: "Twitter (X)", href: "#" },
-  { name: "Instagram", href: "#" },
-  { name: "LinkedIn", href: "#" },
+export const MEMBERS = [
+  {
+    name: "KO",
+    nameEn: "KO",
+    title: "CCO",
+    titleFull: "Chief Creative Officer",
+    image: "/images/team/ko.png",
+    bio: [
+      {
+        text: "企画・撮影・編集・ライブ配信を大手キー局で8年間経験。複数のYouTubeチャンネルの立ち上げ＆運用、TikTokアカウントのローンチ、地上波クオリティの企画制作などを歴任。",
+      },
+      {
+        text: "生成AI動画を用いた映画の制作にも着手し、常に最先端の手法を最適な形でクライアントに提供。",
+      },
+    ],
+  },
+  {
+    name: "深津 蓮",
+    nameEn: "Ren Fukatsu",
+    title: "CTO",
+    titleFull: "Chief Technology Officer",
+    image: "/images/team/ren-fukatsu.png",
+    bio: [
+      {
+        text: "経歴は追って追加します。",
+      },
+    ],
+  },
 ] as const;
 
 export const SITE_CONFIG = {

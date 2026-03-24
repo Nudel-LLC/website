@@ -32,11 +32,8 @@ export function ContactFormCard() {
         </div>
         <div>
           <h3 className="text-2xl font-black tracking-tighter uppercase italic text-gray-900">
-            Let&apos;s Talk
+            CONTACT
           </h3>
-          <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">
-            Get in touch
-          </p>
         </div>
       </div>
 
@@ -101,7 +98,7 @@ export function ContactFormCard() {
             disabled={mutation.isPending}
             className="w-full py-5 bg-orange-500 text-white font-black uppercase tracking-widest italic rounded-2xl shadow-lg shadow-orange-200 hover:bg-orange-600 hover:scale-[1.02] transition-all flex items-center justify-center gap-3 group disabled:opacity-50"
           >
-            {mutation.isPending ? "Sending..." : "Send Inquiry"}
+            {mutation.isPending ? "SENDING..." : "SEND"}
             <ArrowRight
               size={20}
               className="group-hover:translate-x-1 transition-transform"

@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   NAV_ITEMS,
   FOUNDER,
-  COMPANY_INFO,
+  MEMBERS,
   SITE_CONFIG,
 } from "./constants";
 
@@ -26,9 +26,15 @@ describe("FOUNDER", () => {
   });
 });
 
-describe("COMPANY_INFO", () => {
-  it("3つの情報がある", () => {
-    expect(COMPANY_INFO).toHaveLength(3);
+describe("MEMBERS", () => {
+  it("2人のメンバーがあり、全てname/nameEn/title/imageを持つ", () => {
+    expect(MEMBERS).toHaveLength(2);
+    for (const member of MEMBERS) {
+      expect(member.name).toBeTruthy();
+      expect(member.nameEn).toBeTruthy();
+      expect(member.title).toBeTruthy();
+      expect(member.image).toBeTruthy();
+    }
   });
 });
 

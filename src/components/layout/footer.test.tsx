@@ -7,7 +7,6 @@ describe("Footer", () => {
     render(<Footer />);
     expect(screen.getByText("Twitter (X)")).toBeInTheDocument();
     expect(screen.getByText("Instagram")).toBeInTheDocument();
-    expect(screen.getByText("LinkedIn")).toBeInTheDocument();
   });
 
   it("メールアドレスが表示される", () => {

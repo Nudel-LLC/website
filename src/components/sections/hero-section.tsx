@@ -18,7 +18,7 @@ export function HeroSection() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <h1 className="text-5xl md:text-[100px] font-black text-gray-900 mb-10 tracking-tighter leading-[1.05] uppercase font-serif italic">
-            ご縁を力に、
+            ご縁を力に
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-orange-400 to-orange-600 not-italic font-sans">
               価値を形に。

@@ -21,7 +21,7 @@ export function HeroSection() {
             ご縁を力に
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-orange-400 to-orange-600 not-italic font-sans">
-              価値を形に。
+              価値を形に
             </span>
           </h1>
 

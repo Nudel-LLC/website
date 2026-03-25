@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "motion/react";
 import { Repeat, Layers, Users } from "lucide-react";
 
@@ -12,17 +11,17 @@ export function StrengthSection() {
     >
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-50/80 rounded-full blur-[100px] -mr-48 -mt-48" />
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
+        <div>
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-6xl font-black mb-10 leading-tight tracking-tighter uppercase font-serif italic">
+            <h2 className="text-4xl md:text-6xl font-black mb-10 leading-tight tracking-tighter uppercase font-serif">
               バラバラを、
               <br />
-              <span className="text-orange-500 not-italic font-sans">
+              <span className="text-orange-500 font-sans">
                 ひとつに繋ぐ。
               </span>
             </h2>
@@ -86,28 +85,6 @@ export function StrengthSection() {
                 </div>
               </div>
             </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="relative"
-          >
-            <div className="relative z-10 rounded-[60px] overflow-hidden shadow-[0_40px_100px_rgba(255,107,0,0.1)] border-8 border-white">
-              <div className="relative w-full h-[650px]">
-                <Image
-                  src="https://images.unsplash.com/photo-1671716784499-a3d26826d844?q=80&w=1200"
-                  alt="Creative Office"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-            </div>
-            <div className="absolute -top-10 -left-10 w-40 h-40 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob" />
-            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-yellow-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000" />
           </motion.div>
         </div>
       </div>

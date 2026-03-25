@@ -36,7 +36,7 @@ export function ServiceCard({ service, index }: ServiceCardProps) {
           <div className="text-orange-500 mb-8 bg-orange-50 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform shadow-sm">
             {Icon && <Icon className="w-6 h-6" />}
           </div>
-          <h3 className="text-lg font-black mb-5 tracking-widest uppercase font-serif italic text-gray-900">
+          <h3 className="text-lg font-black mb-5 tracking-widest uppercase font-serif text-gray-900">
             {service.title}
           </h3>
           <p className="text-gray-500 text-sm leading-relaxed mb-10">

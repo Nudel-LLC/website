@@ -41,10 +41,10 @@ export function SectionHeader({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.1 }}
-        className="text-4xl md:text-7xl font-black mb-10 tracking-tighter uppercase font-serif italic text-gray-900"
+        className="text-4xl md:text-7xl font-black mb-10 tracking-tighter uppercase font-serif text-gray-900"
       >
         {titleItalic}{" "}
-        <span className="text-orange-500 not-italic font-sans">
+        <span className="text-orange-500 font-sans">
           {titleAccent}
         </span>
       </motion.h2>

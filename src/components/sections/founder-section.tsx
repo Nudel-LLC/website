@@ -19,10 +19,10 @@ export function FounderSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-4xl md:text-7xl font-black mb-20 tracking-tighter uppercase font-serif italic text-gray-900 text-center"
+          className="text-4xl md:text-7xl font-black mb-20 tracking-tighter uppercase font-serif text-gray-900 text-center"
         >
           THE{" "}
-          <span className="text-orange-500 not-italic font-sans">LEADER</span>
+          <span className="text-orange-500 font-sans">LEADER</span>
         </motion.h2>
 
         <FadeInView className="grid lg:grid-cols-2 gap-20 items-center max-w-6xl mx-auto">
@@ -46,7 +46,7 @@ export function FounderSection() {
           <div className="space-y-10">
             <div>
               <div className="flex items-baseline gap-4 mb-8">
-                <h3 className="text-4xl md:text-5xl font-black tracking-tighter text-gray-900 font-serif italic">
+                <h3 className="text-4xl md:text-5xl font-black tracking-tighter text-gray-900 font-serif">
                   {FOUNDER.name}
                 </h3>
                 <span className="px-4 py-1.5 bg-orange-500 text-white text-[10px] font-black tracking-widest uppercase rounded-full">

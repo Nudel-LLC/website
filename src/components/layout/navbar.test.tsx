@@ -4,9 +4,9 @@ import userEvent from "@testing-library/user-event";
 import { Navbar } from "./navbar";
 
 describe("Navbar", () => {
-  it("ロゴ（Nudel LLC）が表示される", () => {
+  it("ロゴ（Nudel）が表示される", () => {
     render(<Navbar />);
-    expect(screen.getByText("LLC")).toBeInTheDocument();
+    expect(screen.getByText("Nudel")).toBeInTheDocument();
   });
 
   it("ナビゲーション項目が表示される", () => {

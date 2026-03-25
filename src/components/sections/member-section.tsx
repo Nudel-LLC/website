@@ -17,9 +17,9 @@ export function MemberSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-5xl font-black mb-6 tracking-tighter uppercase font-serif italic text-gray-900"
+            className="text-3xl md:text-5xl font-black mb-6 tracking-tighter uppercase font-serif text-gray-900"
           >
-            <span className="text-orange-500 not-italic font-sans">
+            <span className="text-orange-500 font-sans">
               MEMBER
             </span>
           </motion.h2>
@@ -52,7 +52,7 @@ export function MemberSection() {
               <div className="space-y-6">
                 <div>
                   <div className="flex items-baseline gap-3 mb-4">
-                    <h3 className="text-2xl md:text-3xl font-black tracking-tighter text-gray-900 font-serif italic">
+                    <h3 className="text-2xl md:text-3xl font-black tracking-tighter text-gray-900 font-serif">
                       {member.name}
                     </h3>
                     <span className="px-3 py-1 bg-orange-500 text-white text-[9px] font-black tracking-widest uppercase rounded-full">

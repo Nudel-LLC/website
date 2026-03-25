@@ -1,20 +1,8 @@
-import { Outfit, Playfair_Display, Noto_Sans_JP, Syncopate } from "next/font/google";
+import { Noto_Serif_JP, Syncopate } from "next/font/google";
 
-export const outfit = Outfit({
+export const notoSerifJP = Noto_Serif_JP({
   subsets: ["latin"],
-  variable: "--font-outfit",
-  display: "swap",
-});
-
-export const playfairDisplay = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-  display: "swap",
-});
-
-export const notoSansJP = Noto_Sans_JP({
-  subsets: ["latin"],
-  variable: "--font-noto-sans-jp",
+  variable: "--font-noto-serif-jp",
   display: "swap",
 });
 

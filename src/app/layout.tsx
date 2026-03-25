@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { outfit, playfairDisplay, notoSansJP, syncopate } from "@/lib/fonts";
+import { notoSerifJP, syncopate } from "@/lib/fonts";
 import { TRPCProvider } from "@/components/providers/trpc-provider";
 import "./globals.css";
 
@@ -76,7 +76,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${outfit.variable} ${playfairDisplay.variable} ${notoSansJP.variable} ${syncopate.variable} antialiased`}
+        className={`${notoSerifJP.variable} ${syncopate.variable} antialiased`}
       >
         <TRPCProvider>{children}</TRPCProvider>
       </body>

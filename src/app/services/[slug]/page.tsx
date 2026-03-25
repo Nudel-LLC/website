@@ -76,7 +76,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               <Icon className="w-6 h-6" />
             </div>
           )}
-          <h1 className="text-3xl md:text-5xl font-black tracking-tighter uppercase font-serif italic text-gray-900">
+          <h1 className="text-3xl md:text-5xl font-black tracking-tighter uppercase font-serif text-gray-900">
             {service.title}
           </h1>
         </div>
@@ -113,7 +113,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       {/* 実績一覧 */}
       {works.length > 0 && (
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-2xl md:text-4xl font-black mb-12 tracking-tighter uppercase font-serif italic text-gray-900">
+          <h2 className="text-2xl md:text-4xl font-black mb-12 tracking-tighter uppercase font-serif text-gray-900">
             Works
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

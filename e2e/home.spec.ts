@@ -7,8 +7,8 @@ test.describe("Home page sections", () => {
 
   test.describe("Hero", () => {
     test("displays main heading", async ({ page }) => {
-      await expect(page.getByRole("heading", { level: 1 })).toContainText("ご縁を力に、");
-      await expect(page.getByRole("heading", { level: 1 })).toContainText("価値を形に。");
+      await expect(page.getByRole("heading", { level: 1 })).toContainText("ご縁を力に");
+      await expect(page.getByRole("heading", { level: 1 })).toContainText("価値を形に");
     });
 
     test("displays CTA buttons with correct links", async ({ page }) => {

@@ -9,7 +9,7 @@ export function CompanySection() {
         <div className="grid lg:grid-cols-3 gap-20">
           <div className="lg:col-span-2 space-y-16">
             <div>
-              <h2 className="text-4xl md:text-6xl font-black mb-12 tracking-tighter italic uppercase text-gray-900">
+              <h2 className="text-4xl md:text-6xl font-black mb-12 tracking-tighter uppercase text-gray-900">
                 COMPANY <span className="text-orange-500">DECK</span>
               </h2>
               <div className="aspect-video w-full bg-gray-50 rounded-[40px] overflow-hidden border border-orange-100 relative group shadow-2xl shadow-orange-50">

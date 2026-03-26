@@ -114,7 +114,7 @@ jobs:
           MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
       - name: Comment preview URL
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         with:
           header: preview-url
           message: |

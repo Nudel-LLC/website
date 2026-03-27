@@ -101,6 +101,7 @@ http://localhost:3000 でサイトが表示されます。
 
 | コマンド | 説明 |
 | --- | --- |
+| `npm run deploy:preview` | preview 環境にデプロイ（CI 用） |
 | `npm run deploy:alpha` | alpha 環境にデプロイ |
 | `npm run deploy:prod` | prod 環境にデプロイ |
 
@@ -132,6 +133,7 @@ src/
         └── routers/        # API ルーター（contact 等）
 e2e/                        # Playwright E2E テスト
 docs/                       # プロジェクトドキュメント
+scripts/                    # ユーティリティスクリプト（npm audit チェック等）
 ```
 
 ## CI/CD
@@ -182,3 +184,4 @@ git push origin 1.0.0
 
 - [デプロイ環境](docs/environments.md) - 環境一覧、運用フロー、Wrangler 設定
 - [アーキテクチャ](docs/architecture.md) - 設計方針、コンポーネント構成、データフロー
+- [テスト戦略](docs/testing.md) - ユニットテスト・E2E テストの構成と実行方法

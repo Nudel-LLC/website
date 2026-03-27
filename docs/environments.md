@@ -57,6 +57,12 @@ git push origin 1.0.0
 | `SITE_URL` | サイト URL |
 | `MICROCMS_SERVICE_DOMAIN` | microCMS サービスドメイン |
 
+任意で設定できる変数:
+
+| 変数名 | 説明 | デフォルト |
+|--------|------|----------|
+| `LOG_LEVEL` | Pino ログレベル (`trace` / `debug` / `info` / `warn` / `error`) | `info` |
+
 Cloudflare Secret として設定するシークレット変数（`wrangler secret put` で設定）:
 
 | 変数名 | 説明 |

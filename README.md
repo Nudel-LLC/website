@@ -101,6 +101,7 @@ http://localhost:3000 でサイトが表示されます。
 
 | コマンド | 説明 |
 | --- | --- |
+| `npm run deploy:preview` | preview 環境にデプロイ（CI 用） |
 | `npm run deploy:alpha` | alpha 環境にデプロイ |
 | `npm run deploy:prod` | prod 環境にデプロイ |
 
@@ -132,6 +133,7 @@ src/
         └── routers/        # API ルーター（contact 等）
 e2e/                        # Playwright E2E テスト
 docs/                       # プロジェクトドキュメント
+scripts/                    # ユーティリティスクリプト（npm audit チェック等）
 ```
 
 ## CI/CD
@@ -139,19 +141,29 @@ docs/                       # プロジェクトドキュメント
 GitHub Actions により、プッシュ・PR 時に以下が自動実行されます。
 
 ```
-PR / Push → Lint → Type Check → Test → Build
-                                         │
-                          main マージ → Alpha デプロイ → E2E テスト
-                          semver タグ → Prod デプロイ
+PR / Push
+  ↓
+Lint ┐
+     ├→ Build → Deploy Preview（PR時のみ）
+Typecheck ┤
+     └→（main マージ）→ Deploy Alpha → E2E テスト
+Test ┘  （semver タグ）→ Deploy Prod
 ```
 
-1. **Lint** - Biome によるコード検証
-2. **Type Check** - TypeScript 型チェック
-3. **Test** - Vitest によるユニットテスト + カバレッジ
-4. **Build** - Next.js ビルド
-5. **Deploy to Alpha** - `main` ブランチへのマージで自動デプロイ
-6. **E2E Tests** - Alpha 環境に対して Playwright テストを実行
-7. **Deploy to Prod** - semver タグ（`X.Y.Z` 形式）の作成でデプロイ
+Lint / Type Check / Test は並列実行され、すべて通った後に Build が実行されます。
+
+| ジョブ | トリガー | 内容 |
+|--------|---------|------|
+| Lint | PR / push | Biome によるコード検証 |
+| Type Check | PR / push | TypeScript 型チェック |
+| Test | PR / push | Vitest ユニットテスト + カバレッジ |
+| Build | PR / push（上記3つ完了後） | Next.js ビルド |
+| Deploy Preview | PR 作成・更新 | `nudel-website-pr-{N}.workers.dev` へデプロイ、PR にコメント |
+| Deploy Alpha | main マージ | `alpha.nudel.co.jp` へデプロイ |
+| E2E Tests | alpha デプロイ後 | Playwright テストを alpha 環境に対して実行 |
+| Deploy Prod | semver タグ（`X.Y.Z`） | `nudel.co.jp` へデプロイ |
+| npm audit | PR / push | 高リスク以上の脆弱性チェック |
+| CodeQL | PR / push / 毎週月曜 | JavaScript / TypeScript の静的セキュリティ解析 |
 
 ## デプロイ
 
@@ -182,3 +194,4 @@ git push origin 1.0.0
 
 - [デプロイ環境](docs/environments.md) - 環境一覧、運用フロー、Wrangler 設定
 - [アーキテクチャ](docs/architecture.md) - 設計方針、コンポーネント構成、データフロー
+- [テスト戦略](docs/testing.md) - ユニットテスト・E2E テストの構成と実行方法

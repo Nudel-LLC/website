@@ -13,7 +13,7 @@ Nudel LLC のコーポレートサイト。Next.js 16 (App Router) + Cloudflare 
 - **Framework**: Next.js 16 (App Router, Turbopack)
 - **Language**: TypeScript 5 (strict mode)
 - **UI**: React 19, Radix UI (shadcn/ui), Tailwind CSS 4
-- **Animation**: Motion (Framer Motion)
+- **Animation**: Motion (motion.dev)
 - **API**: tRPC 11 + TanStack Query 5
 - **Validation**: Zod 4
 - **CMS**: microCMS (microcms-js-sdk)

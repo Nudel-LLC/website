@@ -28,8 +28,10 @@ Next.js App Router のルーティング層。
 
 - `layout.tsx` - ルートレイアウト（メタデータ、JSON-LD、フォント、TRPCProvider）
 - `page.tsx` - トップページ（microCMS からサービス一覧を取得し、各セクションコンポーネントを配置）
-- `services/[slug]/` - サービス詳細ページ（microCMS からサービス情報と紐づく実績を取得）
+- `services/[slug]/` - サービス詳細ページ（`generateStaticParams` でビルド時に静的生成。microCMS からサービス情報と紐づく実績を取得）
 - `api/trpc/` - tRPC の HTTP エンドポイント
+- `robots.ts` - robots.txt 生成（非 prod 環境はクローラーを禁止）
+- `sitemap.ts` - sitemap.xml 生成
 
 ### `src/components/` - コンポーネント
 
@@ -38,9 +40,9 @@ Next.js App Router のルーティング層。
 | ディレクトリ | 役割 | 例 |
 |-------------|------|-----|
 | `layout/` | サイト全体の構造を構成する共通レイアウト | `Navbar`, `Footer` |
-| `sections/` | ページ内の各セクション。ビジネスロジックを含む | `HeroSection`, `ContactForm` |
+| `sections/` | ページ内の各セクション。ビジネスロジックを含む | `HeroSection`, `MemberSection`, `CompanySection`, `ContactFormCard` |
 | `providers/` | React コンテキストプロバイダー | `TRPCProvider` |
-| `ui/` | shadcn/ui ベースの汎用 UI パーツ。ビジネスロジックなし | `Button`, `Input`, `Card` |
+| `ui/` | shadcn/ui ベースの汎用 UI パーツ。ビジネスロジックなし | `Button`, `Input`, `Card`, `FadeInView` |
 
 **コンポーネント配置ルール**:
 - 再利用可能で汎用的なもの → `ui/`
@@ -54,11 +56,12 @@ Next.js App Router のルーティング層。
 
 - `constants.ts` - サイトのデータ定義（ナビゲーション項目、会社情報等）
 - `utils.ts` - ユーティリティ関数（`cn()` for Tailwind クラス結合）
-- `fonts.ts` - Google Fonts 設定（Outfit, Playfair Display, Noto Sans JP, Syncopate）
+- `fonts.ts` - Google Fonts 設定（Noto Serif JP, Syncopate）
 - `logger.ts` - Pino ロガーのインスタンス
 - `microcms/client.ts` - microCMS クライアント（遅延初期化）とデータ取得関数
 - `microcms/types.ts` - microCMS レスポンスの型定義（Service, Work）
 - `microcms/icon-map.ts` - microCMS のアイコン種別から Lucide アイコンコンポーネントへのマッピング
+- `microcms/sanitize.ts` - microCMS から取得した HTML コンテンツのサニタイズ処理
 - `trpc/client.ts` - tRPC React クライアント
 - `email/resend.ts` - Resend クライアント（シングルトン）
 - `email/templates.ts` - メールテンプレート（管理者通知、自動返信）
@@ -68,6 +71,7 @@ Next.js App Router のルーティング層。
 tRPC サーバーの定義とルーター。
 
 - `trpc/trpc.ts` - tRPC インスタンス（`router`, `publicProcedure` のエクスポート）
+- `trpc/context.ts` - tRPC コンテキストファクトリ（リクエスト情報の受け渡し）
 - `trpc/index.ts` - `appRouter` の定義と `AppRouter` 型のエクスポート
 - `trpc/routers/contact.ts` - コンタクトフォーム API
 
@@ -101,23 +105,29 @@ graph TD
     D --> F["HeroSection"]
     D --> G["StrengthSection"]
     D --> H["FounderSection"]
-    D --> I["ServicesSection (サービス一覧データを props で受取)"]
-    D --> J["CompanySection"]
-    D --> K["ContactForm (クライアントコンポーネント)"]
+    D --> I["MemberSection"]
+    D --> J["ServicesSection (サービス一覧データを props で受取)"]
+    D --> K["CompanySection (内部に ContactFormCard を含む)"]
     D --> L["Footer"]
 ```
 
 ### ページレンダリング（サービス詳細ページ）
 
+サービス詳細ページはビルド時に `generateStaticParams` で静的生成（SSG）される。
+
 ```mermaid
 graph TD
-    A["リクエスト /services/:slug"] --> B["Cloudflare Workers (OpenNext)"]
-    B --> C["Next.js App Router"]
-    C --> D["services/[slug]/page.tsx"]
-    D -->|"getServiceBySlug(slug)"| MC["microCMS API"]
-    D -->|"getWorksByServiceId(id)"| MC
-    MC --> D
-    D --> E["サービス詳細 + 実績一覧を表示"]
+    subgraph Build["ビルド時（SSG）"]
+        BP["generateStaticParams()"] -->|"getServices()"| MC["microCMS API"]
+        MC --> BP
+        BP --> BG["各 slug のページを静的生成"]
+        BG -->|"getServiceBySlug(slug)"| MC
+        BG -->|"getWorksByServiceId(id)"| MC
+    end
+    subgraph Runtime["リクエスト時"]
+        A["リクエスト /services/:slug"] --> B["Cloudflare Workers (OpenNext)"]
+        B --> E["静的ファイルを返却"]
+    end
 ```
 
 ## API 設計
@@ -141,6 +151,48 @@ graph LR
 1. `src/server/trpc/routers/` に新しいルーターファイルを作成
 2. `src/server/trpc/index.ts` の `appRouter` にルーターを追加
 3. 型は `AppRouter` 経由で自動的にクライアント側に共有される
+
+## テスト構成
+
+### ユニットテスト（Vitest）
+
+`src/**/*.test.{ts,tsx}` パターンで検出。jsdom 環境で実行される。
+
+**テストセットアップ** (`src/__tests__/setup.ts`):
+
+以下のモジュールをモック化している。
+
+| モジュール | 理由 |
+|------------|------|
+| `motion/react` | アニメーションライブラリの jsdom 非互換を回避 |
+| `next/image` | Next.js Image コンポーネントの最適化処理を省略 |
+| `next/link` | Next.js Link コンポーネントのルーター依存を省略 |
+
+**テストファイルの配置**: テスト対象ファイルと同じディレクトリに `*.test.ts(x)` として配置する。
+
+```
+src/lib/microcms/
+├── client.ts
+├── client.test.ts      ← client.ts のユニットテスト
+├── sanitize.ts
+└── sanitize.test.ts    ← sanitize.ts のユニットテスト
+```
+
+### E2E テスト（Playwright）
+
+`e2e/` ディレクトリに配置。alpha 環境（`alpha.nudel.co.jp`）に対して実行。
+
+| ファイル | テスト対象 |
+|----------|------------|
+| `smoke.spec.ts` | サイト全体の基本的な疎通確認 |
+| `home.spec.ts` | トップページの表示・機能 |
+| `navigation.spec.ts` | ナビゲーションリンクの動作 |
+| `contact-form.spec.ts` | コンタクトフォームの送信フロー |
+| `services.spec.ts` | サービス一覧・詳細ページ |
+
+**実行環境**:
+- CI: Chromium + Mobile Chrome（Pixel 5）。並列無効、リトライ 2 回
+- ローカル: 上記に加え Firefox・Safari も実行
 
 ## 技術的判断
 

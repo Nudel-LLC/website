@@ -29,7 +29,7 @@ export function CompanySection() {
 
           </div>
 
-          <div id="contact" className="relative">
+          <div id="contact" className="relative scroll-mt-24">
             <ContactFormCard />
           </div>
         </div>

@@ -25,7 +25,7 @@ export function ContactFormCard() {
   };
 
   return (
-    <div className="sticky top-32 p-12 bg-white rounded-[40px] border border-orange-100 shadow-[0_40px_100px_rgba(255,107,0,0.08)]">
+    <div className="lg:sticky lg:top-28 p-12 bg-white rounded-[40px] border border-orange-100 shadow-[0_40px_100px_rgba(255,107,0,0.08)]">
       <div className="flex items-center gap-4 mb-8">
         <div className="w-12 h-12 bg-orange-500 rounded-2xl flex items-center justify-center shadow-lg shadow-orange-200">
           <MessageCircle size={24} className="text-white" />

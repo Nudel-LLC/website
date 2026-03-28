@@ -22,6 +22,12 @@ test.describe("Navigation", () => {
       await expect(contactBtn).toBeVisible();
       await expect(contactBtn).toHaveAttribute("href", "/#contact");
     });
+
+    test("logo links to home page", async ({ page }) => {
+      const logo = page.locator("nav").getByRole("link", { name: "Nudel" });
+      await expect(logo).toBeVisible();
+      await expect(logo).toHaveAttribute("href", "/");
+    });
   });
 
   test.describe("Mobile", () => {
@@ -43,6 +49,15 @@ test.describe("Navigation", () => {
 
       await closeBtn.click();
       await expect(page.getByRole("button", { name: "メニューを開く" })).toBeVisible();
+    });
+
+    test("mobile Contact link has correct href", async ({ page }) => {
+      const openBtn = page.getByRole("button", { name: "メニューを開く" });
+      await openBtn.click();
+
+      const contactLink = page.getByRole("link", { name: "CONTACT" });
+      await expect(contactLink).toBeVisible();
+      await expect(contactLink).toHaveAttribute("href", "/#contact");
     });
   });
 });

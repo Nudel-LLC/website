@@ -1,0 +1,101 @@
+name: npm audit auto-fix
+
+on:
+  schedule:
+    # 毎朝 9:00 JST (0:00 UTC)
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  audit-fix:
+    name: Auto-fix npm audit vulnerabilities
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: npm audit チェック
+        id: audit-check
+        run: |
+          if npm audit --audit-level=high 2>&1; then
+            echo "has_vulnerabilities=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_vulnerabilities=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 脆弱性の自動修正
+        if: steps.audit-check.outputs.has_vulnerabilities == 'true'
+        id: fix
+        run: |
+          node scripts/npm-audit-fix.mjs
+          # package.json または package-lock.json に変更があるか確認
+          if git diff --quiet package.json package-lock.json; then
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: テスト実行
+        if: steps.fix.outputs.has_changes == 'true'
+        run: npm run test
+
+      - name: PR 作成
+        if: steps.fix.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          BRANCH="fix/npm-audit-${DATE}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b "$BRANCH"
+          git add package.json package-lock.json
+          git commit -m "fix: npm audit 脆弱性を自動修正 (${DATE})"
+          git push -u origin "$BRANCH"
+
+          # npm-audit ラベルがなければ作成
+          gh label create "npm-audit" --description "npm audit 自動修正" --color "D93F0B" 2>/dev/null || true
+
+          # 既存の npm-audit PR があれば閉じる
+          gh pr list --label "npm-audit" --state open --json number --jq '.[].number' | while read -r pr; do
+            gh pr close "$pr" --comment "新しい npm audit 修正 PR に置き換えます。"
+          done
+
+          # audit 結果をPR本文に含める
+          AUDIT_SUMMARY=$(npm audit 2>&1 | tail -20 || true)
+
+          gh pr create \
+            --title "fix: npm audit 脆弱性を自動修正 (${DATE})" \
+            --body "$(cat <<EOF
+          ## Summary
+          \`npm audit\` で検出された脆弱性を自動修正しました。
+
+          このPRは GitHub Actions のスケジュール実行により自動作成されました。
+          変更内容を確認し、問題なければマージしてください。
+
+          ### audit 結果
+          \`\`\`
+          ${AUDIT_SUMMARY}
+          \`\`\`
+
+          ### 確認事項
+          - [ ] \`npm audit\` の結果が改善されている
+          - [ ] テストが通っている
+          - [ ] overrides の追加が妥当である
+          EOF
+          )" \
+            --label "npm-audit"

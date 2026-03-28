@@ -16,6 +16,8 @@ test.describe("Smoke tests", () => {
 
     await expect(page.locator("nav")).toBeVisible();
     await expect(page.locator("#strength")).toBeVisible();
+    await expect(page.locator("#founder")).toBeVisible();
+    await expect(page.locator("#member")).toBeVisible();
     await expect(page.locator("#services")).toBeVisible();
     await expect(page.locator("#company")).toBeVisible();
     await expect(page.locator("#contact")).toBeVisible();
@@ -32,5 +34,15 @@ test.describe("Smoke tests", () => {
     const data = JSON.parse(content!);
     expect(data["@type"]).toBe("Organization");
     expect(data.name).toBe("Nudel LLC");
+  });
+
+  test("robots.txt is accessible", async ({ page }) => {
+    const response = await page.goto("/robots.txt");
+    expect(response?.status()).toBe(200);
+  });
+
+  test("sitemap.xml is accessible", async ({ page }) => {
+    const response = await page.goto("/sitemap.xml");
+    expect(response?.status()).toBe(200);
   });
 });

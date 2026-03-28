@@ -31,6 +31,9 @@ test.describe("Contact form", () => {
     await page.getByRole("button", { name: /send/i }).click();
 
     await expect(page.getByText("お問い合わせありがとうございます。")).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText("内容を確認の上、担当者よりご連絡いたします。")).toBeVisible({
+      timeout: 10000,
+    });
   });
 
   test("shows error message on failed submission", async ({ page }) => {
@@ -56,6 +59,20 @@ test.describe("Contact form", () => {
 
     const nameInput = page.getByPlaceholder("YOUR NAME");
     const isInvalid = await nameInput.evaluate(
+      (el) => !(el as HTMLInputElement).validity.valid,
+    );
+    expect(isInvalid).toBe(true);
+  });
+
+  test("validates email format", async ({ page }) => {
+    await page.getByPlaceholder("YOUR NAME").fill("テスト太郎");
+    await page.getByPlaceholder("YOUR EMAIL").fill("invalid-email");
+    await page.getByPlaceholder("HOW CAN WE HELP?").fill("テストメッセージ");
+
+    await page.getByRole("button", { name: /send/i }).click();
+
+    const emailInput = page.getByPlaceholder("YOUR EMAIL");
+    const isInvalid = await emailInput.evaluate(
       (el) => !(el as HTMLInputElement).validity.valid,
     );
     expect(isInvalid).toBe(true);

@@ -28,7 +28,7 @@ Next.js App Router のルーティング層。
 
 - `layout.tsx` - ルートレイアウト（メタデータ、JSON-LD、フォント、TRPCProvider）
 - `page.tsx` - トップページ（microCMS からサービス一覧を取得し、各セクションコンポーネントを配置）
-- `services/[slug]/` - サービス詳細ページ（microCMS からサービス情報と紐づく実績を取得）
+- `services/[slug]/` - サービス詳細ページ（`generateStaticParams` でビルド時に静的生成。microCMS からサービス情報と紐づく実績を取得）
 - `api/trpc/` - tRPC の HTTP エンドポイント
 - `robots.ts` - robots.txt 生成（非 prod 環境はクローラーを禁止）
 - `sitemap.ts` - sitemap.xml 生成
@@ -40,9 +40,9 @@ Next.js App Router のルーティング層。
 | ディレクトリ | 役割 | 例 |
 |-------------|------|-----|
 | `layout/` | サイト全体の構造を構成する共通レイアウト | `Navbar`, `Footer` |
-| `sections/` | ページ内の各セクション。ビジネスロジックを含む | `HeroSection`, `ContactForm` |
+| `sections/` | ページ内の各セクション。ビジネスロジックを含む | `HeroSection`, `MemberSection`, `CompanySection`, `ContactFormCard` |
 | `providers/` | React コンテキストプロバイダー | `TRPCProvider` |
-| `ui/` | shadcn/ui ベースの汎用 UI パーツ。ビジネスロジックなし | `Button`, `Input`, `Card` |
+| `ui/` | shadcn/ui ベースの汎用 UI パーツ。ビジネスロジックなし | `Button`, `Input`, `Card`, `FadeInView` |
 
 **コンポーネント配置ルール**:
 - 再利用可能で汎用的なもの → `ui/`
@@ -105,23 +105,29 @@ graph TD
     D --> F["HeroSection"]
     D --> G["StrengthSection"]
     D --> H["FounderSection"]
-    D --> I["ServicesSection (サービス一覧データを props で受取)"]
-    D --> J["CompanySection"]
-    D --> K["ContactForm (クライアントコンポーネント)"]
+    D --> I["MemberSection"]
+    D --> J["ServicesSection (サービス一覧データを props で受取)"]
+    D --> K["CompanySection (内部に ContactFormCard を含む)"]
     D --> L["Footer"]
 ```
 
 ### ページレンダリング（サービス詳細ページ）
 
+サービス詳細ページはビルド時に `generateStaticParams` で静的生成（SSG）される。
+
 ```mermaid
 graph TD
-    A["リクエスト /services/:slug"] --> B["Cloudflare Workers (OpenNext)"]
-    B --> C["Next.js App Router"]
-    C --> D["services/[slug]/page.tsx"]
-    D -->|"getServiceBySlug(slug)"| MC["microCMS API"]
-    D -->|"getWorksByServiceId(id)"| MC
-    MC --> D
-    D --> E["サービス詳細 + 実績一覧を表示"]
+    subgraph Build["ビルド時（SSG）"]
+        BP["generateStaticParams()"] -->|"getServices()"| MC["microCMS API"]
+        MC --> BP
+        BP --> BG["各 slug のページを静的生成"]
+        BG -->|"getServiceBySlug(slug)"| MC
+        BG -->|"getWorksByServiceId(id)"| MC
+    end
+    subgraph Runtime["リクエスト時"]
+        A["リクエスト /services/:slug"] --> B["Cloudflare Workers (OpenNext)"]
+        B --> E["静的ファイルを返却"]
+    end
 ```
 
 ## API 設計

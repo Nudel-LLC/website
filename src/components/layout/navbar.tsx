@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
@@ -8,6 +9,24 @@ import { NAV_ITEMS } from "@/lib/constants";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  const handleHashClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      const hash = href.split("#")[1];
+      if (!hash) return;
+      // トップページで同じハッシュをクリックした場合、手動でスクロールする
+      if (pathname === "/") {
+        const el = document.getElementById(hash);
+        if (el) {
+          e.preventDefault();
+          el.scrollIntoView({ behavior: "smooth" });
+          window.history.replaceState(null, "", href);
+        }
+      }
+    },
+    [pathname],
+  );
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-2xl border-b border-orange-100">
@@ -26,6 +45,7 @@ export function Navbar() {
               key={item.name}
               href={item.href}
               className="text-[11px] font-black text-gray-500 hover:text-orange-500 transition-colors uppercase tracking-[0.2em]"
+              onClick={(e) => handleHashClick(e, item.href)}
             >
               {item.name}
             </Link>
@@ -33,6 +53,7 @@ export function Navbar() {
           <Link
             href="/#contact"
             className="px-8 py-3 bg-orange-500 text-white text-[11px] font-black rounded-full hover:bg-orange-600 hover:shadow-lg hover:shadow-orange-200 transition-all tracking-widest uppercase"
+            onClick={(e) => handleHashClick(e, "/#contact")}
           >
             Contact
           </Link>
@@ -63,7 +84,10 @@ export function Navbar() {
                   key={item.name}
                   href={item.href}
                   className="text-lg font-black text-gray-900 hover:text-orange-500 transition-colors"
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => {
+                    setIsOpen(false);
+                    handleHashClick(e, item.href);
+                  }}
                 >
                   {item.name}
                 </Link>
@@ -71,7 +95,10 @@ export function Navbar() {
               <Link
                 href="/#contact"
                 className="w-full py-4 bg-orange-500 text-white text-center font-black rounded-xl"
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => {
+                  setIsOpen(false);
+                  handleHashClick(e, "/#contact");
+                }}
               >
                 CONTACT
               </Link>

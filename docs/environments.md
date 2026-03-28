@@ -103,9 +103,10 @@ Cloudflare Secret として設定するシークレット変数（`wrangler secr
 
 preview 環境はリポジトリレベルの GitHub Secrets をそのまま使用する。フォーク PR からはシークレットにアクセスできない（GitHub のデフォルト保護）。
 
+`MICROCMS_API_KEY` と `RESEND_API_KEY` は `wrangler secret bulk` により各 preview Worker に個別設定される。そのためコンタクトフォームのメール送信も preview 環境で動作する。
+
 ### 制限事項
 
-- `RESEND_API_KEY` は Cloudflare Secret として各 Worker に個別設定が必要。preview Worker には設定されないため、メール送信は失敗する。メール送信の動作確認は alpha 環境で行うこと
 - `workers.dev` のサブドメインを使用するため、カスタムドメインは設定されない
 
 ## タグの命名規則

@@ -74,6 +74,7 @@ src/lib/microcms/
 - `retries: 2`
 - `forbidOnly: true`（`.only` を含むテストはエラー）
 - 失敗時にスクリーンショットとトレースを保存
+- レポートは `playwright-report/` と `test-results/` にアーティファクトとして 7 日間保存される
 
 ### テストファイル
 
@@ -106,11 +107,37 @@ PLAYWRIGHT_BASE_URL=https://alpha.nudel.co.jp npm run e2e
 ```
 PR / Push
   ↓
-Lint → Typecheck → Test（Vitest）→ Build
-                                     ↓
-                        main マージ → Deploy Alpha → E2E テスト（Playwright）
+Lint ┐
+     ├→ Build → Deploy Preview（PR時のみ、dependabot除く）
+Typecheck ┤
+     └→（main マージ）→ Deploy Alpha → E2E テスト（Playwright）
+Test ┘                 （semver タグ）→ Deploy Prod
 ```
 
-- ユニットテストは PR 段階で毎回実行される
-- E2E テストは alpha デプロイ後に自動実行（alpha 環境に対して）
-- PR マージ前に必ず `npm run test` と `npm run e2e` が通ることを確認すること
+Lint / Typecheck / Test は並列実行され、すべて成功した場合に Build が実行される。
+
+### CI での E2E テストの動作
+
+- **実行ブラウザ**: Chromium のみ（mobile-chrome / Firefox / Safari は除外）
+- **オプション**: `--ignore-snapshots`（スナップショットの差分は無視）
+- **alpha 環境の準備待機**: デプロイ後に最大 300 秒（10 秒 × 30 回）ポーリングして疎通確認
+- **レポート保存**: `playwright-report/` と `test-results/` を 7 日間アーティファクトとして保存
+
+### セキュリティワークフロー
+
+PR / main へのプッシュ時に以下が追加で実行される：
+
+| ワークフロー | 内容 |
+|-------------|------|
+| `security.yml` | `npm audit --audit-level=high`。除外設定済みの脆弱性は `scripts/check-audit.mjs` で許容 |
+| `codeql.yml` | CodeQL による静的解析（JavaScript / TypeScript, security-extended クエリ）。毎週月曜にも定期実行 |
+
+### ローカルでの確認
+
+PR マージ前に必ず以下を実行してすべて通ることを確認すること。
+
+```bash
+npm run lint
+npm run typecheck
+npm run test
+```

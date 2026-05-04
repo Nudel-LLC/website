@@ -57,7 +57,7 @@ test.describe("Home page sections", () => {
     test("displays founder name and title", async ({ page }) => {
       const founder = page.locator("#founder");
       await expect(founder.getByText("岡崎 美玖")).toBeVisible();
-      await expect(founder.getByText("代表")).toBeVisible();
+      await expect(founder.getByText("代表", { exact: true })).toBeVisible();
     });
   });
 

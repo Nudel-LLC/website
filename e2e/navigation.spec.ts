@@ -55,7 +55,7 @@ test.describe("Navigation", () => {
       const openBtn = page.getByRole("button", { name: "メニューを開く" });
       await openBtn.click();
 
-      const contactLink = page.getByRole("link", { name: "CONTACT" });
+      const contactLink = page.locator("nav").getByRole("link", { name: "CONTACT" });
       await expect(contactLink).toBeVisible();
       await expect(contactLink).toHaveAttribute("href", "/#contact");
     });

@@ -37,7 +37,7 @@
     "lucide-react": "^1.14.0",
     "microcms-js-sdk": "^3.4.0",
     "motion": "^12.38.0",
-    "next": "16.2.3",
+    "next": "^16.2.6",
     "pino": "^10.3.1",
     "radix-ui": "^1.4.3",
     "react": "19.2.4",
@@ -49,10 +49,11 @@
     "zod": "^4.3.6"
   },
   "overrides": {
-    "fast-xml-parser": "5.5.8",
-    "express-rate-limit": "8.3.0",
+    "fast-xml-parser": "5.7.3",
+    "express-rate-limit": "8.5.1",
     "@hono/node-server": "1.19.14",
-    "hono": "4.12.12",
+    "hono": "4.12.18",
+    "postcss": "8.5.14",
     "vite": "7.3.2",
     "undici": "7.24.5",
     "yaml": "2.8.3",
@@ -66,7 +67,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.14",
-    "@opennextjs/cloudflare": "^1.19.6",
+    "@opennextjs/cloudflare": "^1.19.8",
     "@playwright/test": "^1.59.1",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.9.1",

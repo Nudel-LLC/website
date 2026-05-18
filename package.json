@@ -46,7 +46,7 @@
     "sanitize-html": "^2.17.4",
     "superjson": "^2.2.6",
     "tailwind-merge": "^3.6.0",
-    "zod": "^4.3.6"
+    "zod": "^4.4.3"
   },
   "overrides": {
     "fast-xml-parser": "5.7.3",

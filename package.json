@@ -67,7 +67,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.15",
-    "@opennextjs/cloudflare": "^1.19.9",
+    "@opennextjs/cloudflare": "^1.19.11",
     "@playwright/test": "^1.59.1",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.9.1",

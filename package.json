@@ -40,8 +40,8 @@
     "next": "^16.2.7",
     "pino": "^10.3.1",
     "radix-ui": "^1.4.3",
-    "react": "19.2.6",
-    "react-dom": "19.2.6",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
     "resend": "^6.12.4",
     "sanitize-html": "^2.17.4",
     "superjson": "^2.2.6",
@@ -65,7 +65,9 @@
     },
     "router": {
       "path-to-regexp": "8.4.0"
-    }
+    },
+    "@opennextjs/aws": "4.0.3",
+    "esbuild": "0.28.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.16",
